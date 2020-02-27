@@ -6,7 +6,6 @@ import "./src/config/statusBarConfig";
 export default function App() {
   return (
 
-
     <>
 
       <Routes />
@@ -14,18 +13,3 @@ export default function App() {
 
   )
 }
-/*
-    headerLayoutPreset: 'center',
-    headerBackTitleVisible: false,
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: '#5c0408',
-
-      },
-      headerTintColor: '#fff'
-    },
-
-
-Main.navigationOptions = {
-  title: 'Hello World',
-} */
