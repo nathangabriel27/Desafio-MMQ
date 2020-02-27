@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { Actions } from 'react-native-router-flux'
 
-
-export default class app extends Component {
-  static navigationOptions = {
-    title: 'Desafio MMQ'
-  }
-
+export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +17,7 @@ export default class app extends Component {
     // usuarios randomicos 
     fetch(`https://randomuser.me/api/?results=${this.state.numUsers}`)
       // usuarios fixos 
-  //fetch(`https://randomuser.me/api/?page=${this.state.numPage}&results=${this.state.numUsers}&nat=us&seed=rdmusr`)
+      //fetch(`https://randomuser.me/api/?page=${this.state.numPage}&results=${this.state.numUsers}&nat=us&seed=rdmusr`)
 
       .then(res => res.json())
       .then(res => {
@@ -29,17 +25,13 @@ export default class app extends Component {
           loading: false,
           data: res.results || []
         })
-
       })
   }
-  teste = () => {
-    Alert.alert('testntapd')
+
+  userDetails(item) {
+    Actions.userDetails({ item })
   }
 
-  functionNumUsers() {
-    console.log('function numUsers ');
-
-  }
   componentDidMount() {
     this.loadUsers()
     //console.log('aqui é o data: ',data);
@@ -79,8 +71,9 @@ export default class app extends Component {
 
                 <TouchableOpacity
                   style={styles.card}
-                  onPress={() => { this.props.navigation.push('UserDetails', { 'name': this.state.name }) }}
-                //   onPress={() => { this.teste() }}
+                  onPress={() => this.userDetails(item)}
+                //onPress={() => { this.props.navigation.push('UserDetails', { 'name': this.state.name }) }}
+                //onPress={() => { this.teste() }}
                 >
                   <Image
                     source={{ uri: item.picture.medium }}
@@ -94,14 +87,14 @@ export default class app extends Component {
                     <View style={styles.user}>
                       <Text style={styles.name}> {item.name.first} {item.name.last} </Text>
                       <Text style={styles.email}> {item.login.username}</Text>
+                      <Text style={styles.email}>{item.gender}</Text>
+                      <Text style={styles.email}>{item.email}</Text>
+                      <Text style={styles.email}>{item.phone}</Text>
+                      <Text style={styles.email}>{item.login.username}</Text>
 
                     </View>
 
-                    {/* 
-                  <Text style={styles.email}>{item.gender}</Text>
-                  <Text style={styles.email}>{item.email}</Text>
-                  <Text style={styles.email}>{item.phone}</Text>
-                  <Text style={styles.email}>{item.login.username}</Text> */}
+
 
                   </View>
 
@@ -191,7 +184,7 @@ const styles = StyleSheet.create({
   },
   user: {
     flex: 1,
-    flexDirection: 'row-reverse',
+    flexDirection: 'column',
     justifyContent: 'space-between'
   },
 

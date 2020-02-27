@@ -1,15 +1,16 @@
-import React from 'react';
-import Routes from './src/routes'
-import "./src/config/statusBarConfig";
+import React, { Component } from 'react';
+import Router from './Router'
+//import "./src/config/statusBarConfig";
 
+console.disableYellowBox = true;
 
-export default function App() {
-  return (
-
-    <>
-
-      <Routes />
-    </>
-
-  )
+class App extends Component {
+  render() {
+    return (
+      <Router></Router>
+    )
+  }
 }
+
+export default App
+
