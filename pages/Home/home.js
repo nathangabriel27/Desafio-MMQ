@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons'
+
 
 export default class Home extends Component {
   constructor(props) {
@@ -28,6 +30,13 @@ export default class Home extends Component {
       })
   }
 
+  teste() {
+    Alert.alert('teste')
+  }
+  setings(){
+    Actions.setings()
+  }
+
   userDetails(item) {
     Actions.userDetails({ item })
   }
@@ -53,7 +62,10 @@ export default class Home extends Component {
 
       return (
         <>
-          <View style={styles.main}>
+          <TouchableOpacity style={styles.main}
+            onPress={() =>  this.setings()}
+
+          >
             <Text style={styles.mainText} >Desafio MasterMaq
           </Text>
 
@@ -61,7 +73,7 @@ export default class Home extends Component {
               <Text>Numero de usuarios : {this.state.numUsers}</Text>
             </View>
 
-          </View>
+          </TouchableOpacity>
 
 
           <View style={styles.container}>
@@ -75,26 +87,48 @@ export default class Home extends Component {
                 //onPress={() => { this.props.navigation.push('UserDetails', { 'name': this.state.name }) }}
                 //onPress={() => { this.teste() }}
                 >
+
                   <Image
+                    //source={{ uri: item.picture.large }}
+                    //source={{ uri: item.picture.thumbnail }}
                     source={{ uri: item.picture.medium }}
-                    //                  source={{ uri: item.picture.large }}
                     style={styles.avatar}
 
                   />
 
                   <View style={styles.info}>
 
-                    <View style={styles.user}>
+                    <View style={styles.dataUser}>
+
                       <Text style={styles.name}> {item.name.first} {item.name.last} </Text>
                       <Text style={styles.email}> {item.login.username}</Text>
-                      <Text style={styles.email}>{item.gender}</Text>
                       <Text style={styles.email}>{item.email}</Text>
+                      {/*                   
+                      <Text style={styles.email}>{item.gender}</Text>
                       <Text style={styles.email}>{item.phone}</Text>
-                      <Text style={styles.email}>{item.login.username}</Text>
+                      <Text style={styles.email}>{item.login.username}</Text> 
+                      */}
+
 
                     </View>
 
+                    <View style={styles.containerIcons}>
 
+
+                      <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }} >
+                        <Ionicons name="ios-phone-portrait" size={30} color='#5c060a' />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }} >
+                        <Ionicons name="ios-mail" size={30} color='#5c060a' />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }}>
+                        <Ionicons name="ios-pin" size={30} color='#5c060a' />
+                      </TouchableOpacity>
+
+
+                    </View>
 
                   </View>
 
@@ -107,9 +141,7 @@ export default class Home extends Component {
             </FlatList>
 
           </View >
-
         </>
-
       );
     }
   }
@@ -121,10 +153,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#edf0',
     borderBottomWidth: 0,
     borderTopWidth: 0,
-
-    /*    flex: 1,
-       alignItems: 'center',
-       justifyContent: 'center', */
   },
   main: {
     marginLeft: 0,
@@ -153,47 +181,65 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     //borderBottomColor: '#ccc',
     //borderBottomWidth: 15,
+
     //Estilos de elevacao android e ios
     borderRadius: 10,
     elevation: 4,
     backgroundColor: '#fff',
-    shadowOffset: { width: 1, height: 1 },
+    shadowOffset: { width: 2, height: 1 },
     shadowColor: '#e9e9e9e9',
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    marginHorizontal: 10,
+
+    marginHorizontal: 12,
     marginVertical: 10
 
   },
   avatar: {
-    width: 80,
-    height: 80,
-    marginRight: 10,
+    width: 60,
+    height: 60,
+    marginRight: 5,
     alignSelf: 'center',
-    marginHorizontal: 10,
-    marginVertical: 10,
+    marginHorizontal: 5,
+    marginVertical: 5,
     borderRadius: 50,
     borderColor: '#5c0408',
-    borderWidth: 4,
+    borderWidth: 3,
   },
   info: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginHorizontal: 18,
-    marginVertical: 10
+    marginVertical: 10,
+    alignItems: 'center',
+    //backgroundColor: '#5c06',
+
   },
-  user: {
+  dataUser: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
+    justifyContent: 'space-between',
+    //backgroundColor: '#5c06',
 
+
+  },
+  containerIcons: {
+    height: 40,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  icons: {
+    marginHorizontal: 10
+  },
   name: {
-    fontSize: 12
+    fontSize: 16,
+    fontWeight: 'bold'
   },
   email: {
     fontSize: 14,
-    fontWeight: 'bold'
   },
   loading: {
     flex: 1,
@@ -201,43 +247,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-
-
-
-
-/*
-import React from 'react';
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
-
-export default function App() {
-
-
-  return (
-    <>
-
-      <View style={styles.container}>
-        <TouchableOpacity>
-
-          <Text style={{
-            color: '#fff',
-            fontSize: 26
-          }}
-          >
-            Hello MMQ </Text>
-        </TouchableOpacity>
-      </View>
-
-    </>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#5c0408',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
- */
