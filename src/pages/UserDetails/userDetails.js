@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground, FlatList, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
-import MapView from 'expo';
+import MapView from 'react-native-maps';
 
 var { height, width } = Dimensions.get('window')
 
