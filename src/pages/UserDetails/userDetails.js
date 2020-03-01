@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground, FlatList, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 var { height, width } = Dimensions.get('window')
 
@@ -12,19 +12,53 @@ export default class UserDetails extends Component {
       deviceWidth: width,
       deviceHeight: height,
       item: props.item,
-      region: null
+      region: null,
+      loading: true,
+      searchCep: [],
+
     }
   }
 
+  codCep = () => {
+    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=31250320,+BR&key=AIzaSyBJSz-eJVItINRcVGL8XJYSBGLvSTGqYls').then(res=>res.json()).then(data=>{
+      console.log(data.results.place_id);
+
+    }).catch()
+
+
+    // usuarios randomicos 
+    //fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=31250320&key=AIzaSyBVvpE2A3__qwwnX2vPnD_A1epgVsEKWQ0`)
+    // usuarios fixos 
+    //fetch(`https://randomuser.me/api/?page=${this.state.numPage}&results=${this.state.numUsers}&nat=br&seed=rdmusr`)
+
+    /*       .then(res => res.json())
+          .then(res => {
+            this.setState({
+              loading: false,
+              searchCep: res.results.address_components || []
+            })
+          }) 
+              
+          
+          
+          
+          fetch('https://viacep.com.br/ws/01001000/json/').then(res=>res.json()).then(data=>{
+      console.log(data);
+
+    }).catch()
+          */
+  }
+
   async componentDidMount() {
+
     navigator.geolocation.getCurrentPosition(
-      ({ coords: { latitude, longitude } }) => {
+      () => {
         this.setState({
           region: {
-            latitude,
-            longitude,
-            latitudeDelta: 0.07,
-            longitudeDelta: 0.07
+            latitude: parseFloat(this.state.item.location.coordinates.latitude),
+            longitude: parseFloat(this.state.item.location.coordinates.longitude),
+            latitudeDelta: 3,
+            longitudeDelta: 3
           }
         });
       }, //  sucesso
@@ -55,6 +89,7 @@ export default class UserDetails extends Component {
             //source={{ uri: this.state.item.picture.thumbnail }}
             //source={{ uri: this.state.item.picture.medium }}
             style={styles.avatar}
+
           />
 
         </View>
@@ -63,14 +98,23 @@ export default class UserDetails extends Component {
 
           <ScrollView style={styles.scrollView}>
 
-            <Text style={styles.text}>Sexo:{this.state.item.gender}</Text>
-            <Text style={styles.text}>idade:{this.state.item.dob.age}</Text>
+            <TouchableOpacity onPress={this.codCep}>
+
+              <Text style={styles.text}>Sexo:{this.state.item.gender}</Text>
+            </TouchableOpacity>
+
             <Text style={styles.text}>Nome : {this.state.item.name.first} {this.state.item.name.last}</Text>
+            <Text style={styles.text}>idade:{this.state.item.dob.age}</Text>
             <Text style={styles.text}>Email: {this.state.item.email}</Text>
             <Text style={styles.text}>Telefone: {this.state.item.phone}</Text>
             <Text style={styles.text}>Aniversario:{this.state.item.dob.date}</Text>
-            <Text style={styles.text}>latitude:{this.state.item.location.coordinates.latitude}</Text>
-            <Text style={styles.text}>longitude:{this.state.item.location.coordinates.longitude}</Text>
+
+            <Text style={styles.text}>latitude:{parseFloat(this.state.item.location.coordinates.latitude)}</Text>
+            <Text style={styles.text}>longitude:{parseFloat(this.state.item.location.coordinates.longitude)}</Text>
+            <Text style={styles.text}>Endereco :
+            </Text>
+
+
 
 
             <View style={styles.mapView}>
@@ -85,7 +129,14 @@ export default class UserDetails extends Component {
 
            */
                 showsUserLocation
-              />
+              >
+                <Marker.Animated
+                  coordinate={{
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                  }}
+                />
+              </MapView>
 
             </View>
           </ScrollView>
@@ -174,5 +225,10 @@ const styles = StyleSheet.create({
     height: height * 0.45,
     justifyContent: 'center',
     opacity: 0.3
+  },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

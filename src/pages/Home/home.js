@@ -8,7 +8,7 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numUsers: 10,
+      numUsers: 1000,
       loading: true,
       data: [],
 

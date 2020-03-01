@@ -1,0 +1,94 @@
+{
+  "results": [
+    {
+
+
+      "address_components": [
+        {
+          "long_name": "31250-320",
+          "short_name": "31250-320",
+          "types": [
+            "postal_code"
+          ]
+        },
+        {
+          "long_name": "Nova Cachoeirinha",
+          "short_name": "Nova Cachoeirinha",
+          "types": [
+            "political",
+            "sublocality",
+            "sublocality_level_1"
+          ]
+        },
+        {
+          "long_name": "Belo Horizonte",
+          "short_name": "Belo Horizonte",
+          "types": [
+            "administrative_area_level_2",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Minas Gerais",
+          "short_name": "MG",
+          "types": [
+            "administrative_area_level_1",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Brasil",
+          "short_name": "BR",
+          "types": [
+            "country",
+            "political"
+          ]
+        }
+      ],
+
+
+
+      "formatted_address": "Nova Cachoeirinha, Belo Horizonte - MG, 31250-320, Brasil",
+
+      "geometry": {
+
+        "bounds": {
+          "northeast": {
+            "lat": -19.8827076,
+            "lng": -43.95798240000001
+          },
+
+          "southwest": {
+            "lat": -19.8846176,
+            "lng": -43.9603657
+          }
+
+        },
+        "location": {
+          "lat": -19.8840615,
+          "lng": -43.9595758
+        },
+
+        "location_type": "APPROXIMATE",
+
+        "viewport": {
+          "northeast": {
+            "lat": -19.8823136197085,
+            "lng": -43.95782506970851
+          },
+          "southwest": {
+            "lat": -19.8850115802915,
+            "lng": -43.9605230302915
+          }
+        }
+
+      },
+      "place_id": "ChIJFUMMx5WQpgARAs3Rqw3YJGo",
+      
+      "types": [
+        "postal_code"
+      ]
+    }
+  ],
+  "status": "OK"
+}
