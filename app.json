@@ -23,7 +23,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.codingmechanic.desafioMMQ",
+      "config": {
+        "googleMapsApiKey": "SUA CHAVE DA API DO IOS AQUI"
+      }
+    },
+    "android": {
+      "package": "com.codingmechanic.DesafioMMQ",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBVvpE2A3__qwwnX2vPnD_A1epgVsEKWQ0"
+        }
+      }
     }
   }
 }
