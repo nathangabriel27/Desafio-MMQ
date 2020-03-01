@@ -8,18 +8,17 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numUsers: 1000,
+      numUsers: 10,
       loading: true,
-      name: 'nathan',
       data: [],
 
     }
   }
   loadUsers = () => {
     // usuarios randomicos 
-    fetch(`https://randomuser.me/api/?results=${this.state.numUsers}`)
+    fetch(`https://randomuser.me/api/?nat=BR&results=${this.state.numUsers}`)
       // usuarios fixos 
-      //fetch(`https://randomuser.me/api/?page=${this.state.numPage}&results=${this.state.numUsers}&nat=us&seed=rdmusr`)
+      //fetch(`https://randomuser.me/api/?page=${this.state.numPage}&results=${this.state.numUsers}&nat=br&seed=rdmusr`)
 
       .then(res => res.json())
       .then(res => {
@@ -33,7 +32,7 @@ export default class Home extends Component {
   teste() {
     Alert.alert('teste')
   }
-  setings(){
+  setings() {
     Actions.setings()
   }
 
@@ -43,27 +42,26 @@ export default class Home extends Component {
 
   componentDidMount() {
     this.loadUsers()
-    //console.log('aqui é o data: ',data);
-
   }
+
+
 
   render() {
     if (this.state.loading) {
       return (
 
         <View style={styles.loading}>
-          <ActivityIndicator size='large' color='#f1c40f' />
+          <ActivityIndicator size='large' color='#fc0303' />
           <Text>Carregando dados da api....</Text>
 
         </View>
       )
     } else {
 
-
       return (
         <>
           <TouchableOpacity style={styles.main}
-            onPress={() =>  this.setings()}
+            onPress={() => this.setings()}
 
           >
             <Text style={styles.mainText} >Desafio MasterMaq
@@ -84,8 +82,6 @@ export default class Home extends Component {
                 <TouchableOpacity
                   style={styles.card}
                   onPress={() => this.userDetails(item)}
-                //onPress={() => { this.props.navigation.push('UserDetails', { 'name': this.state.name }) }}
-                //onPress={() => { this.teste() }}
                 >
 
                   <Image
@@ -100,16 +96,9 @@ export default class Home extends Component {
 
                     <View style={styles.dataUser}>
 
-                      <Text style={styles.name}> {item.name.first} {item.name.last} </Text>
-                      <Text style={styles.email}> {item.login.username}</Text>
+                      <Text style={styles.name}>{item.name.first} {item.name.last} </Text>
                       <Text style={styles.email}>{item.email}</Text>
-                      {/*                   
-                      <Text style={styles.email}>{item.gender}</Text>
-                      <Text style={styles.email}>{item.phone}</Text>
-                      <Text style={styles.email}>{item.login.username}</Text> 
-                      */}
-
-
+ 
                     </View>
 
                     <View style={styles.containerIcons}>
