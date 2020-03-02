@@ -26,9 +26,10 @@ export default class Home extends Component {
           loading: false,
           data: res.results || []
         })
-        
+
       })
   }
+
 
   teste() {
     Alert.alert('teste')
@@ -37,13 +38,14 @@ export default class Home extends Component {
     Actions.setings()
   }
 
-  userDetails(item) {
+  userDetails(item ) {
+    
     Actions.userDetails({ item })
   }
 
   componentDidMount() {
     this.loadUsers()
-    
+
   }
 
   render() {
@@ -56,7 +58,7 @@ export default class Home extends Component {
 
         </View>
       )
-      
+
     } else {
 
       return (
@@ -78,13 +80,13 @@ export default class Home extends Component {
           <View style={styles.container}>
             <FlatList
               data={this.state.data}
-              
+
               renderItem={({ item }) => (
 
                 <TouchableOpacity
-                
+
                   style={styles.card}
-                  onPress={() => this.userDetails(item)}
+                  onPress={() => { this.userDetails(item) }}
                 >
 
                   <Image

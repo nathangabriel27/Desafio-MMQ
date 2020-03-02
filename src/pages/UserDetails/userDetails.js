@@ -14,70 +14,27 @@ export default class UserDetails extends Component {
       item: props.item,
       region: null,
       loading: true,
-      searchCep: {
 
+      latitude: 37.78825,
+      longitude: -122.4324
 
-      },
+      ,
 
     }
   }
-
-  codCep = () => {
-    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=31250320,+BR&key=AIzaSyBJSz-eJVItINRcVGL8XJYSBGLvSTGqYls')
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          searchCep: data
-        })
-
-
-        data.results.map(item => {
-          console.log(item.geometry.location.lat),
-          console.log(item.geometry.location.lng);
-        })
-
-      }).catch(err => {
-        console.log(err);
-      })
-
-
-    // usuarios randomicos 
-    //fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=31250320&key=AIzaSyBVvpE2A3__qwwnX2vPnD_A1epgVsEKWQ0`)
-    // usuarios fixos 
-    //fetch(`https://randomuser.me/api/?page=${this.state.numPage}&results=${this.state.numUsers}&nat=br&seed=rdmusr`)
-
-    /*       
-    .then(res => res.json())
-          .then(res => {
-            this.setState({
-              loading: false,
-              searchCep: res.results.address_components || []
-            })
-          }) 
-              
-          
-          
-          
-          fetch('https://viacep.com.br/ws/01001000/json/').then(res=>res.json()).then(data=>{
-      console.log(data);
-
-    }).catch()
-          */
-  }
-
   async componentDidMount() {
-    this.codCep()
 
     navigator.geolocation.getCurrentPosition(
       () => {
-        this.setState({
-          region: {
-            latitude: parseFloat(this.state.item.location.coordinates.latitude),
-            longitude: parseFloat(this.state.item.location.coordinates.longitude),
-            latitudeDelta: 3,
-            longitudeDelta: 3
-          }
-        });
+        this.codCep(),
+          this.setState({
+            region: {
+              latitude: this.state.latitude,
+              longitude: this.state.longitude,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01
+            }
+          });
       }, //  sucesso
       () => { },
       {
@@ -85,8 +42,31 @@ export default class UserDetails extends Component {
         enableHighAccuracy: true,
         maximumAge: 1000
       }
+
     );
   }
+
+  codCep = () => {
+    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=31250320,+BR&key=AIzaSyBJSz-eJVItINRcVGL8XJYSBGLvSTGqYls')
+      .then(res => res.json())
+      .then(data => {
+
+
+        data.results.map(item => {
+          this.setState({
+            latitude: item.geometry.location.lat,
+            longitude: item.geometry.location.lng,
+          })
+          console.log(item.geometry.location.lat);
+          console.log(item.geometry.location.lng);
+
+        })
+
+      }).catch(err => {
+        console.log(err);
+      })
+  }
+
 
   render() {
     const { region } = this.state
@@ -115,9 +95,11 @@ export default class UserDetails extends Component {
 
           <ScrollView style={styles.scrollView}>
 
-            <TouchableOpacity onPress={this.codCep}>
-
-              <Text style={styles.text}>Sexo:{this.state.item.gender}</Text>
+            <TouchableOpacity onPress={() => { console.log(this.state.latitude); }}>
+              <Text style={styles.text}>Sexo:{this.state.latitude}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => { console.log(this.state.longitude); }}>
+              <Text style={styles.text}>Sexo:{this.state.longitude}</Text>
             </TouchableOpacity>
 
             <Text style={styles.text}>Nome : {this.state.item.name.first} {this.state.item.name.last}</Text>
@@ -126,9 +108,9 @@ export default class UserDetails extends Component {
             <Text style={styles.text}>Telefone: {this.state.item.phone}</Text>
             <Text style={styles.text}>Aniversario:{this.state.item.dob.date}</Text>
 
-            <Text style={styles.text}>latitude:{parseFloat(this.state.item.location.coordinates.latitude)}</Text>
-            <Text style={styles.text}>longitude:{parseFloat(this.state.item.location.coordinates.longitude)}</Text>
-            <Text style={styles.text}>Endereço:  </Text>
+            <Text style={styles.text}>latitude:{this.state.latitude}</Text>
+            <Text style={styles.text}>longitude:{this.state.longitude}</Text>
+            <Text style={styles.text}>Endereço: </Text>
 
 
 
