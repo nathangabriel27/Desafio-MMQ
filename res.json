@@ -68,9 +68,8 @@
           "lat": -19.8840615,
           "lng": -43.9595758
         },
-
+        
         "location_type": "APPROXIMATE",
-
         "viewport": {
           "northeast": {
             "lat": -19.8823136197085,
@@ -81,10 +80,8 @@
             "lng": -43.9605230302915
           }
         }
-
       },
       "place_id": "ChIJFUMMx5WQpgARAs3Rqw3YJGo",
-      
       "types": [
         "postal_code"
       ]

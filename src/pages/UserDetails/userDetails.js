@@ -14,16 +14,31 @@ export default class UserDetails extends Component {
       item: props.item,
       region: null,
       loading: true,
-      searchCep: [],
+      searchCep: {
+
+
+      },
 
     }
   }
 
   codCep = () => {
-    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=31250320,+BR&key=AIzaSyBJSz-eJVItINRcVGL8XJYSBGLvSTGqYls').then(res=>res.json()).then(data=>{
-      console.log(data.results.place_id);
+    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=31250320,+BR&key=AIzaSyBJSz-eJVItINRcVGL8XJYSBGLvSTGqYls')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          searchCep: data
+        })
 
-    }).catch()
+
+        data.results.map(item => {
+          console.log(item.geometry.location.lat),
+          console.log(item.geometry.location.lng);
+        })
+
+      }).catch(err => {
+        console.log(err);
+      })
 
 
     // usuarios randomicos 
@@ -31,7 +46,8 @@ export default class UserDetails extends Component {
     // usuarios fixos 
     //fetch(`https://randomuser.me/api/?page=${this.state.numPage}&results=${this.state.numUsers}&nat=br&seed=rdmusr`)
 
-    /*       .then(res => res.json())
+    /*       
+    .then(res => res.json())
           .then(res => {
             this.setState({
               loading: false,
@@ -50,6 +66,7 @@ export default class UserDetails extends Component {
   }
 
   async componentDidMount() {
+    this.codCep()
 
     navigator.geolocation.getCurrentPosition(
       () => {
@@ -111,8 +128,7 @@ export default class UserDetails extends Component {
 
             <Text style={styles.text}>latitude:{parseFloat(this.state.item.location.coordinates.latitude)}</Text>
             <Text style={styles.text}>longitude:{parseFloat(this.state.item.location.coordinates.longitude)}</Text>
-            <Text style={styles.text}>Endereco :
-            </Text>
+            <Text style={styles.text}>Endereço:  </Text>
 
 
 

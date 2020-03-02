@@ -26,6 +26,7 @@ export default class Home extends Component {
           loading: false,
           data: res.results || []
         })
+        
       })
   }
 
@@ -42,9 +43,8 @@ export default class Home extends Component {
 
   componentDidMount() {
     this.loadUsers()
+    
   }
-
-
 
   render() {
     if (this.state.loading) {
@@ -56,6 +56,7 @@ export default class Home extends Component {
 
         </View>
       )
+      
     } else {
 
       return (
@@ -77,9 +78,11 @@ export default class Home extends Component {
           <View style={styles.container}>
             <FlatList
               data={this.state.data}
+              
               renderItem={({ item }) => (
 
                 <TouchableOpacity
+                
                   style={styles.card}
                   onPress={() => this.userDetails(item)}
                 >
@@ -98,7 +101,7 @@ export default class Home extends Component {
 
                       <Text style={styles.name}>{item.name.first} {item.name.last} </Text>
                       <Text style={styles.email}>{item.email}</Text>
- 
+
                     </View>
 
                     <View style={styles.containerIcons}>
