@@ -23,10 +23,10 @@ export default class UserDetails extends Component {
     }
   }
   async componentDidMount() {
+    this.codCep(),
 
     navigator.geolocation.getCurrentPosition(
       () => {
-        this.codCep(),
           this.setState({
             region: {
               latitude: this.state.latitude,
@@ -94,13 +94,6 @@ export default class UserDetails extends Component {
         <View style={styles.main} >
 
           <ScrollView style={styles.scrollView}>
-
-            <TouchableOpacity onPress={() => { console.log(this.state.latitude); }}>
-              <Text style={styles.text}>Sexo:{this.state.latitude}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => { console.log(this.state.longitude); }}>
-              <Text style={styles.text}>Sexo:{this.state.longitude}</Text>
-            </TouchableOpacity>
 
             <Text style={styles.text}>Nome : {this.state.item.name.first} {this.state.item.name.last}</Text>
             <Text style={styles.text}>idade:{this.state.item.dob.age}</Text>

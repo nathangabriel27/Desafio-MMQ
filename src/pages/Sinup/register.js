@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity, Dimensions } from 'react-native'
 import MapView, { Marker, Callout } from 'react-native-maps'
 import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location'
-import { MaterialIcons } from '@expo/vector-icons'
+import { Ionicons, MaterialIcons,Entypo } from '@expo/vector-icons'
+
 
 import Search from '../components/Search/search'
 var { height, width } = Dimensions.get('window')
@@ -138,7 +139,20 @@ export default function Setings({ navigation }) {
         } 
       */}
       </MapView >
+      <TextInput
+        style={styles.textInput}
+        placeholder="Seu usuario do Github ..."
+        placeholderTextColor='rgba(0,0,0,0.75)'
+      />
       <Search />
+      <TouchableOpacity style={styles.dataSubmit}>
+      <Ionicons name="logo-github" size={25} color="#fff" marginLeft={10} />
+        <Text style={styles.dataSubmitTeText}>
+          Enviar Git 
+          com localização.
+        </Text>
+        <Entypo name="location" size={25} color="#fff" width={10} />
+      </TouchableOpacity>
       <View style={styles.searchForm} >
 
 
@@ -231,6 +245,59 @@ const styles = StyleSheet.create({
     marginLeft: 15
 
   },
+  textInput: {
+    flex: 1,
+    position: 'absolute',
+    height: 50,
+    height: 54,
+    marginHorizontal: 20,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderRadius: 25,
+    borderColor: '#000',
+    borderWidth: 1,
+    top: Platform.select({ ios: 60, android: 40 }),
+    width: '90%',
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { x: 0, y: 0 },
+    shadowRadius: 15,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    fontSize: 18,
+    elevation: 5,
+    height: 54,
+    margin: 0,
+    borderRadius: 25,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 20,
+    paddingRight: 20,
+
+  },
+  dataSubmit: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: 'center',
+    position: 'absolute',
+    height: 50,
+    height: 54,
+    marginHorizontal: 20,
+    borderRadius: 25,
+    borderWidth: 3,
+    top: Platform.select({ ios: 200, android: 180 }),
+    width: '90%',
+    backgroundColor: '#000',
+    flexDirection: 'row',
+
+  },
+  dataSubmitTeText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff'
+
+  }
 
 
 })

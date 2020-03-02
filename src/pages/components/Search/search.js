@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet } from 'react-native'
+import { Platform, StyleSheet, TextInput } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 export default class Search extends Component {
@@ -28,7 +28,8 @@ export default class Search extends Component {
       styles={{
         container: {
           position: 'absolute',
-          top: Platform.select({ ios: 60, android: 40 }),
+          top: Platform.select({ ios: 130, android: 110 }),
+
           width: '100%'
         },
         textInputContainer: {

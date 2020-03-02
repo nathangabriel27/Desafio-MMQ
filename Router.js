@@ -6,6 +6,7 @@ import { Scene, Router } from 'react-native-router-flux';
 import Home from './src/pages/Home/home'
 import UserDetails from './src/pages/UserDetails/userDetails'
 import Setings from './src/pages/Setings/setings'
+import Register from './src/pages/Sinup/register'
 
 class RouterComponent extends Component {
   constructor(props) {
@@ -26,14 +27,18 @@ class RouterComponent extends Component {
                 />
               <Scene key='home'
                 component={Home}
-                initial
-
-              />
+                
+                />
               <Scene
                 key='userDetails'
                 component={UserDetails}
-              />
+                />
 
+              <Scene
+                key='register'
+                component={Register}
+                initial
+              />
             </Scene>
           </Scene>
 
