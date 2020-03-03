@@ -1,8 +1,6 @@
 {
   "results": [
     {
-
-
       "address_components": [
         {
           "long_name": "31250-320",
@@ -45,30 +43,22 @@
           ]
         }
       ],
-
-
-
       "formatted_address": "Nova Cachoeirinha, Belo Horizonte - MG, 31250-320, Brasil",
-
       "geometry": {
-
         "bounds": {
           "northeast": {
             "lat": -19.8827076,
             "lng": -43.95798240000001
           },
-
           "southwest": {
             "lat": -19.8846176,
             "lng": -43.9603657
           }
-
         },
         "location": {
           "lat": -19.8840615,
           "lng": -43.9595758
         },
-        
         "location_type": "APPROXIMATE",
         "viewport": {
           "northeast": {
@@ -88,4 +78,195 @@
     }
   ],
   "status": "OK"
+}
+
+
+Object {
+
+  "geometry": Object {
+    "location": Object {
+      "lat": -19.9270508,
+      "lng": -43.9410337,
+    },
+    "viewport": Object {
+      "northeast": Object {
+        "lat": -19.9257259197085,
+        "lng": -43.9395841697085,
+      },
+      "southwest": Object {
+        "lat": -19.9284238802915,
+        "lng": -43.9422821302915,
+      },
+    },
+  },
+  "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+  "id": "0f78da5a965f23131de7731f5d9d76977f54c5c5",
+  "international_phone_number": "+55 31 3519-7500",
+  "name": "Mastermaq Softwares",
+  "opening_hours": Object {
+    "open_now": true,
+    "periods": Array [
+      Object {
+        "close": Object {
+          "day": 1,
+          "time": "1800",
+        },
+        "open": Object {
+          "day": 1,
+          "time": "0800",
+        },
+      },
+      Object {
+        "close": Object {
+          "day": 2,
+          "time": "1800",
+        },
+        "open": Object {
+          "day": 2,
+          "time": "0800",
+        },
+      },
+      Object {
+        "close": Object {
+          "day": 3,
+          "time": "1800",
+        },
+        "open": Object {
+          "day": 3,
+          "time": "0800",
+        },
+      },
+      Object {
+        "close": Object {
+          "day": 4,
+          "time": "1800",
+        },
+        "open": Object {
+          "day": 4,
+          "time": "0800",
+        },
+      },
+      Object {
+        "close": Object {
+          "day": 5,
+          "time": "1800",
+        },
+        "open": Object {
+          "day": 5,
+          "time": "0800",
+        },
+      },
+    ],
+    "weekday_text": Array [
+      "segunda-feira: 08:00 – 18:00",
+      "terça-feira: 08:00 – 18:00",
+      "quarta-feira: 08:00 – 18:00",
+      "quinta-feira: 08:00 – 18:00",
+      "sexta-feira: 08:00 – 18:00",
+      "sábado: Fechado",
+      "domingo: Fechado",
+    ],
+  },
+  "photos": Array [
+    Object {
+      "height": 3024,
+      "html_attributions": Array [
+        "<a href=\"https://maps.google.com/maps/contrib/103003414615227469051\">Helbert Macedo</a>",
+      ],
+      "photo_reference": "CmRaAAAA-oMejCorkBv2aTWkQXWwp96tVUeIRDJmu90uMp_UocHBaF422AzFQdqRdoaX3HSN9ozUkKYL_9UC1X50RuMLPqjWWfPtUNtTDHirx-Br3J56AUWf3OHppVy5B6R9dSlhEhDbuSitE7nSkPvl8eBxNxhWGhT_gc54aYgKeEplh2czMSpuaY30BQ",
+      "width": 4032,
+    },
+    Object {
+      "height": 3024,
+      "html_attributions": Array [
+        "<a href=\"https://maps.google.com/maps/contrib/103003414615227469051\">Helbert Macedo</a>",
+      ],
+      "photo_reference": "CmRaAAAA4UxXgfQiYCTdJOW-O4uut3bFwPeT1r79EUUrZB7i3EfDaRSFKDZPdwDgG-ftXaydizJirOsYhdVYq1OcWKK68-_tsyo6NEIftHA0K_35YVadRy2x4yjjb4jXASxn-XwUEhCwWM1rUBR7UqoOlY7v9FOAGhT1si2ez6HW8Y0AryhAIcPTDz4CgQ",
+      "width": 4032,
+    },
+    Object {
+      "height": 4032,
+      "html_attributions": Array [
+        "<a href=\"https://maps.google.com/maps/contrib/103003414615227469051\">Helbert Macedo</a>",
+      ],
+      "photo_reference": "CmRaAAAAGSiLCY0AlNYnkptLAvfObGtNcfLbZl9NvQW4ZFGo80aBU2xoijgPMN_HakBfP0llDWU4KgB8NfAyEjCZu8lMSsTAMUICCqtLF-tvNH95UrTJqKlbuhaE8rsSC8526Ed-EhAXdT97qfxXJ0Ds6dpFznhYGhTLaDukC_9-2U0AwV7NzL9TnQR1dg",
+      "width": 3024,
+    },
+    Object {
+      "height": 4032,
+      "html_attributions": Array [
+        "<a href=\"https://maps.google.com/maps/contrib/103003414615227469051\">Helbert Macedo</a>",
+      ],
+      "photo_reference": "CmRaAAAAR_sTVCu-48aEuDaqsdKYxmqEdtRIHzc3U9vmy4MbiZEmd63av3LmXGJ6GtyjVsSqv4hIQDfb1EEmwOrb42t4DcbBaPMHtxOFDnF8fFzykGNn9IbBRo_R4z-98_koOjCuEhAwdt5Neur4VM5iQn-TwzHVGhQphG-ejuerNM0CBobRILYq8jyt-A",
+      "width": 3024,
+    },
+  ],
+  "place_id": "ChIJP643C49ZzpQRvHMQkS6NlfM",
+  "plus_code": Object {
+    "compound_code": "33F5+5H Lourdes, Belo Horizonte - MG, Brasil",
+    "global_code": "58GR33F5+5H",
+  },
+  "rating": 4.2,
+  "reference": "ChIJP643C49ZzpQRvHMQkS6NlfM",
+  "reviews": Array [
+    Object {
+      "author_name": "Josélio Viana Prates",
+      "author_url": "https://www.google.com/maps/contrib/108209940972316091529/reviews",
+      "language": "pt",
+      "profile_photo_url": "https://lh3.ggpht.com/-oC0W9sYnOh4/AAAAAAAAAAI/AAAAAAAAAAA/s0FB7UaVcbI/s128-c0x00000000-cc-rp-mo/photo.jpg",
+      "rating": 5,
+      "relative_time_description": "na última semana",
+      "text": "Orgulho de ser MQ",
+      "time": 1583166679,
+    },
+    Object {
+      "author_name": "Gustavo Carvalho",
+      "author_url": "https://www.google.com/maps/contrib/117750676900380975480/reviews",
+      "language": "pt",
+      "profile_photo_url": "https://lh6.ggpht.com/-7pGL72g7H08/AAAAAAAAAAI/AAAAAAAAAAA/lT6_8_qOHNs/s128-c0x00000000-cc-rp-mo/photo.jpg",
+      "rating": 5,
+      "relative_time_description": "há 3 anos",
+      "text": "Bom atendimento ;P",
+      "time": 1467159268,
+    },
+    Object {
+      "author_name": "Camz Toledo",
+      "author_url": "https://www.google.com/maps/contrib/104916210037354048704/reviews",
+      "profile_photo_url": "https://lh3.ggpht.com/-KQrvhDGDNrI/AAAAAAAAAAI/AAAAAAAAAAA/T57KV5I3phw/s128-c0x00000000-cc-rp-mo-ba2/photo.jpg",
+      "rating": 5,
+      "relative_time_description": "na última semana",
+      "text": "",
+      "time": 1582821825,
+    },
+    Object {
+      "author_name": "Elizeu Antunes",
+      "author_url": "https://www.google.com/maps/contrib/104007780759439988949/reviews",
+      "profile_photo_url": "https://lh4.ggpht.com/-46iwvIp2YNU/AAAAAAAAAAI/AAAAAAAAAAA/3gqAhj-H0Mo/s128-c0x00000000-cc-rp-mo-ba3/photo.jpg",
+      "rating": 1,
+      "relative_time_description": "na última semana",
+      "text": "",
+      "time": 1583229761,
+    },
+    Object {
+      "author_name": "Nayara Gomes",
+      "author_url": "https://www.google.com/maps/contrib/115506714639118422114/reviews",
+      "profile_photo_url": "https://lh6.ggpht.com/-nv0t3MRIuNM/AAAAAAAAAAI/AAAAAAAAAAA/ldflXvKzhW8/s128-c0x00000000-cc-rp-mo/photo.jpg",
+      "rating": 5,
+      "relative_time_description": "na última semana",
+      "text": "",
+      "time": 1583230385,
+    },
+  ],
+  "scope": "GOOGLE",
+  "types": Array [
+    "electronics_store",
+    "point_of_interest",
+    "store",
+    "establishment",
+  ],
+  "url": "https://maps.google.com/?cid=17552090353888162748",
+  "user_ratings_total": 5,
+  "utc_offset": -180,
+  "vicinity": "Rua Rio de Janeiro, 1462 - Lourdes, Belo Horizonte",
+  "website": "http://www.mastermaq.com.br/",
 }

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity, Dimensions } from 'react-native'
 import MapView, { Marker, Callout } from 'react-native-maps'
 import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location'
-import { Ionicons, MaterialIcons,Entypo } from '@expo/vector-icons'
-
+import { Ionicons, MaterialIcons, Entypo } from '@expo/vector-icons'
+import firebase from "firebase"
 
 import Search from '../components/Search/search'
 var { height, width } = Dimensions.get('window')
@@ -12,6 +12,8 @@ var { height, width } = Dimensions.get('window')
 export default function Setings({ navigation }) {
 
   const [currentRegion, setCurrentRegion] = useState(null)
+  const [gitDetails, setGitDetails] = useState('')
+  const [regionDetails, setRegionDetails] = useState('')
   /*   const [devs, setDevs] = useState([])
     const [techs, setTechs] = useState(''); */
 
@@ -72,13 +74,8 @@ export default function Setings({ navigation }) {
         loadingEnabled
       //onRegionChangeComplete={handleRegionChanged}
       >
-        {/*    <Marker
-          coordinate={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-          }}
-        />
- */}
+
+
 
         <Marker
           //usuarios Fixos pra uso  Offline
@@ -139,24 +136,28 @@ export default function Setings({ navigation }) {
         } 
       */}
       </MapView >
+
+      
       <TextInput
         style={styles.textInput}
         placeholder="Seu usuario do Github ..."
         placeholderTextColor='rgba(0,0,0,0.75)'
       />
+
       <Search />
+
       <TouchableOpacity style={styles.dataSubmit}>
-      <Ionicons name="logo-github" size={25} color="#fff" marginLeft={10} />
-        <Text style={styles.dataSubmitTeText}>
-          Enviar Git 
-          com localização.
+
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+
+          <Ionicons name="logo-github" style={styles.icon} />
+          <Text style={styles.dataSubmitTeText}>
+            Enviar Git com localização
         </Text>
-        <Entypo name="location" size={25} color="#fff" width={10} />
+          <Entypo name="location" style={styles.icon} />
+        </View>
       </TouchableOpacity>
-      <View style={styles.searchForm} >
 
-
-      </View>
     </>
   );
 }
@@ -297,6 +298,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff'
 
+  },
+  icon: {
+    fontSize: 28,
+    color: '#fff',
+    marginRight: 15,
+    marginLeft: 14,
   }
 
 
