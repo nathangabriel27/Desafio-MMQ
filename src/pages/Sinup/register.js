@@ -24,7 +24,7 @@ export default class Sinup extends Component {
       avatarGithub: '',
       nameGithub: '',
       bioGitHub: '',
-      resGit: [],
+      resGit: {},
 
     };
   }
@@ -55,15 +55,16 @@ export default class Sinup extends Component {
     )
   }
 
-  registerUser() {
-    fetch(`https://api.github.com/users/nathangabriel27?cliente_id=Iv1.6fb8eedfa7524395&f916990317cfe62292aa217b277130b1bc194904`)
+  registerUser = () => {
+    var self = this
+    fetch(`https://api.github.com/users/nathangabriel27`)
       .then(res => res.json())
       .then(res => {
-        this.setState({
-          resGit: res | []
-
+        console.log('Res:  ', res.login);
+        self.setState({
+          resGit: res
         })
-        console.log('Location ', this.state.location);
+        console.log('ResGit:  ', this.state.resGit);
 
       })
     const user = {
