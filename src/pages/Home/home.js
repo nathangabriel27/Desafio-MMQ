@@ -18,6 +18,10 @@ export default class Home extends Component {
       resgit: []
     }
   }
+  componentDidMount() {
+    this.loadUsers()
+    this.searchUsers()
+  }
   loadUsers = () => {
     // usuarios randomicos 
     const nat = 'BR'
@@ -54,15 +58,14 @@ export default class Home extends Component {
   userDetails(item) {
     Actions.userDetails({ item })
   }
-  componentDidMount() {
-    this.loadUsers()
-    this.searchUsers()
+  userDetailsGit(item) {
+    Actions.userDetailsGit({ item })
   }
 
-  renderUser(item) {
+  renderUserGit(item) {
     return (
       <TouchableOpacity style={styles.cardGit}
-        onPress={() => this.profileGit(item)}
+        onPress={() => this.userDetailsGit(item)}
 
       >
         <Image
@@ -75,12 +78,15 @@ export default class Home extends Component {
 
         <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Text style={styles.textGitName}> {item.nameGithub} </Text>
+          <Ionicons name="logo-github" style={{ fontSize: 10, color :'#fff'}} />
           <Text style={styles.textGit}> {item.usernameGithub} </Text>
           {/* <Text style={styles.textGit}> {item.bioGitHub} </Text> */}
         </View>
-        <View style={styles.iconGitContainer}>
+        <TouchableOpacity style={styles.iconGitContainer}
+          onPress={() => this.profileGit(item)}
+        >
           <Ionicons name="logo-github" style={styles.iconGit} />
-        </View>
+        </TouchableOpacity>
 
       </TouchableOpacity >
 
@@ -123,13 +129,12 @@ export default class Home extends Component {
 
               <FlatList
                 data={this.state.usersData}
-                renderItem={({ item }) => this.renderUser(item)}
+                renderItem={({ item }) => this.renderUserGit(item)}
 
               />
 
               <FlatList
                 data={this.state.data}
-
                 renderItem={({ item }) => (
 
                   <TouchableOpacity

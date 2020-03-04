@@ -14,12 +14,8 @@ export default class UserDetails extends Component {
       item: props.item,
       region: null,
       loading: true,
-
       latitude: 37.78825,
-      longitude: -122.4324
-
-      ,
-
+      longitude: -122.4324,
     }
   }
   async componentDidMount() {

@@ -3,6 +3,8 @@ import { Platform, StyleSheet, Text, View, Alert, Image, Dimensions, TouchableOp
 import { Ionicons, MaterialIcons, Entypo } from '@expo/vector-icons'
 import { Actions } from 'react-native-router-flux';
 import MapView, { Marker, Callout } from 'react-native-maps'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+
 
 console.disableYellowBox = true;
 
@@ -10,12 +12,11 @@ import firebase from "firebase"
 
 var { height, width } = Dimensions.get('window');
 
-import Search from '../components/Search/search'
 
 // import { Container } from './styles';
 
-export default class Sinup extends Component {
 
+export default class Sinup extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,6 +27,9 @@ export default class Sinup extends Component {
       nameGithub: '',
       bioGitHub: '',
       resGit: {},
+      searchFocused: false,
+      location: {},
+      locationDescription: '',
 
     };
   }
@@ -54,9 +58,8 @@ export default class Sinup extends Component {
             this.state.avatarGithub,
             this.state.nameGithub,
             this.state.bioGitHub,
-
-
-
+            this.state.location,
+            this.state.locationDescription,
           )
         },
       ],
@@ -81,13 +84,18 @@ export default class Sinup extends Component {
           avatarGithub: this.state.avatarGithub,
           nameGithub: this.state.nameGithub,
           bioGitHub: this.state.bioGitHub,
+          locationDescription: this.state.locationDescription,
+          Location: {
+            latitude: this.state.location.lat,
+            longitude: this.state.location.lng
+          }
         }
         firebase.database().ref("Users/")
           .push(user)
           .then((snapshot) => {
             Alert.alert(
-              'Registrar',
-              'Confirma o seu registo?',
+              'Sucesso !!',
+              'Cadastramos voce ao nosso banco de dados, agora so conferir na tela que vamos lhe direcionar seu perfil. =D',
               [
                 {
                   text: 'OK', onPress: () => this.backToHome()
@@ -100,6 +108,7 @@ export default class Sinup extends Component {
   }
 
   render() {
+    const { searchFocused } = this.state
     return (
 
       <>
@@ -161,7 +170,96 @@ export default class Sinup extends Component {
             onChangeText={e => this.setState({ usernameGithub: e })}
           />
 
-          <Search />
+          <GooglePlacesAutocomplete
+            placeholder='Qual a localização? '
+            placeholderTextColor='#333'
+            onPress={(data, details) => {
+              /*   
+              console.log("vicinity: ", details.vicinity);
+                 console.log("data: ", data);
+                      console.log( "details.geometry.location -- ", details.geometry.location);
+                      */
+
+
+              this.setState({
+                location: details.geometry.location,
+                locationDescription: details.vicinity
+
+              })
+              console.log("location :", this.state.locationDescription);
+
+            }}
+            query={{
+              key: 'AIzaSyBVvpE2A3__qwwnX2vPnD_A1epgVsEKWQ0',
+              language: 'pt'
+            }}
+            textInputProps={{
+              onFocus: () => { this.setState({ searchFocused: true }) },
+              onblur: () => { this.setState({ searchFocused: false }) },
+              autoCapitalize: 'none',
+              autoCurrent: false
+            }}
+            listViewDisplayed={searchFocused}
+            fetchDetails
+            enablePoweredByContainer={false}
+            styles={{
+              container: {
+                position: 'absolute',
+                top: Platform.select({ ios: 130, android: 110 }),
+
+                width: '100%'
+              },
+              textInputContainer: {
+                flex: 1,
+                backgtoudColor: 'transparent',
+                height: 54,
+                marginHorizontal: 20,
+                borderTopWidth: 0,
+                borderBottomWidth: 0,
+                borderRadius: 25
+              },
+              textInput: {
+                height: 54,
+                margin: 0,
+                borderRadius: 25,
+                paddingTop: 0,
+                paddingBottom: 0,
+                paddingLeft: 20,
+                paddingRight: 20,
+                marginTop: 0,
+                marginLeft: 0,
+                marginRight: 0,
+                elevation: 5,
+                shadowColor: '#000',
+                shadowOpacity: 0.1,
+                shadowOffset: { x: 0, y: 0 },
+                shadowRadius: 15,
+                borderWidth: 1,
+                borderColor: '#ddd',
+                fontSize: 18,
+              },
+              listView: {
+                borderWidth: 1,
+                borderColor: '#ddd',
+                backgroundColor: '#fff',
+                marginHorizontal: 20,
+                elevation: 5,
+                shadowColor: '#000',
+                shadowOpacity: 0.1,
+                shadowOffset: { x: 0, y: 0 },
+                shadowRadius: 15,
+                marginTop: 10,
+                borderRadius: 25
+              },
+              description: {
+                fontSize: 16
+              },
+              row: {
+                padding: 20,
+                height: 58
+              }
+            }}
+          />
 
 
           <TouchableOpacity onPress={() => this.toRegister()} style={styles.dataSubmit}>
@@ -310,7 +408,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     borderRadius: 25,
     borderWidth: 3,
-    top: Platform.select({ ios: 200, android: 180 }),
+    top: Platform.select({ ios: 800, android: 880 }),
     width: '90%',
     backgroundColor: '#000',
     flexDirection: 'row',
