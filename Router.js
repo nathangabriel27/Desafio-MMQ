@@ -28,7 +28,6 @@ class RouterComponent extends Component {
                 component={Setings}
               />
               <Scene key='home'
-                initial
                 component={Home}
                 
                 />
@@ -40,6 +39,7 @@ class RouterComponent extends Component {
               <Scene
                 key='register'
                 component={Register}
+                initial
                 />
               <Scene
                 key='userGit'

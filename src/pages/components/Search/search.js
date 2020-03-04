@@ -5,16 +5,25 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 export default class Search extends Component {
   state = {
     searchFocused: false,
-    location: '',
+    location:{},
   }
+  
   render() {
     return <GooglePlacesAutocomplete
       placeholder='Qual a localização? '
       placeholderTextColor='#333'
       onPress={(data, details) => {
+/*      console.log("data: ", data);
+        console.log("Details: ", details);
+        console.log( "details.geometry.location -- ", details.geometry.location);
+        */
+        
+
         this.setState({
           location: details.geometry.location
         })
+        console.log(this.state.location);
+
       }}
       query={{
         key: 'AIzaSyBVvpE2A3__qwwnX2vPnD_A1epgVsEKWQ0',
@@ -83,8 +92,9 @@ export default class Search extends Component {
           height: 58
         }
       }}
-    />;
-
+      />;
+    
+    
   }
 }
 /* const styles = StyleSheet.create({

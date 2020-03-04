@@ -18,10 +18,9 @@ export default class Sinup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: null,
       deviceWidth: width,
       deviceHeight: height,
-      usernameGithub: '',
+      usernameGithub: 'nathangabriel27',
       avatarGithub: '',
       nameGithub: '',
       bioGitHub: '',
@@ -31,7 +30,7 @@ export default class Sinup extends Component {
   }
 
 
-  componentDidMount() {
+  async componentDidMount() {
     const { currentUser } = firebase.auth();
     if (currentUser) {
       console.log("Estou logado: ", currentUser.uid)
@@ -64,7 +63,7 @@ export default class Sinup extends Component {
           resGit: res | []
 
         })
-        console.log('ffalkj',this.state.resGit);
+        console.log('Location ', this.state.location);
 
       })
     const user = {

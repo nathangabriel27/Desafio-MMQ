@@ -11,6 +11,7 @@ export default class Home extends Component {
     this.state = {
       numUsers: 50,
       loading: true,
+      refreshing: false,
       data: [],
       usersData: [],
       githubUsername: 'nathangabriel27',
@@ -19,7 +20,8 @@ export default class Home extends Component {
   }
   loadUsers = () => {
     // usuarios randomicos 
-    fetch(`https://randomuser.me/api/?nat=BR&results=${this.state.numUsers}`)
+    const nat = 'BR'
+    fetch(`https://randomuser.me/api/?nat=${nat}&results=${this.state.numUsers}`)
       // usuarios fixos 
       //fetch(`https://randomuser.me/api/?page=${this.state.numPage}&results=${this.state.numUsers}&nat=br&seed=rdmusr`)
 
@@ -27,7 +29,8 @@ export default class Home extends Component {
       .then(res => {
         this.setState({
           loading: false,
-          data: res.results || []
+          data: res.results || [],
+          refreshing: false
         })
 
       })
@@ -53,11 +56,20 @@ export default class Home extends Component {
         console.log(usersData)
       })
   }
+
+  handleRefresh = () => {
+    this.setState({
+      refreshing: true,
+      nat: 'BR'
+    }, () => {
+      this.loadGitUser()
+    })
+  }
   setings() {
     Actions.register()
   }
-  profileGit() {
-    Actions.profile()
+  profileGit(item) {
+    Actions.profile({ item })
   }
   userDetails(item) {
     Actions.userDetails({ item })
@@ -70,7 +82,7 @@ export default class Home extends Component {
   renderUser(item) {
     return (
       <TouchableOpacity style={styles.cardGit}
-        onPress={() => this.profileGit(usernameGithub)}
+        onPress={() => this.profileGit(item)}
 
       >
         <Image
@@ -127,6 +139,7 @@ export default class Home extends Component {
               <FlatList
                 data={this.state.usersData}
                 renderItem={({ item }) => this.renderUser(item)}
+
               />
 
               <FlatList
@@ -181,6 +194,9 @@ export default class Home extends Component {
 
                 )}
                 keyExtractor={item => item.email}
+                refreshing={this.state.refreshing}
+                onRefresh={this.state.handleRefresh}
+
               >
 
               </FlatList>
