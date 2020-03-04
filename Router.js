@@ -30,6 +30,7 @@ class RouterComponent extends Component {
               <Scene key='home'
                 component={Home}
                 
+                initial
                 />
               <Scene
                 key='userDetails'
@@ -39,12 +40,11 @@ class RouterComponent extends Component {
               <Scene
                 key='register'
                 component={Register}
-                initial
-                />
+              />
               <Scene
                 key='userGit'
                 component={UserGit}
-                />
+              />
               <Scene
                 key='profile'
                 component={Profile}

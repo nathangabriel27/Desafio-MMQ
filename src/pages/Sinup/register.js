@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Alert, Dimensions, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { Platform, StyleSheet, Text, View, Alert, Image, Dimensions, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { Ionicons, MaterialIcons, Entypo } from '@expo/vector-icons'
 import { Actions } from 'react-native-router-flux';
 import MapView, { Marker, Callout } from 'react-native-maps'
 
+console.disableYellowBox = true;
 
 import firebase from "firebase"
 
@@ -20,7 +21,7 @@ export default class Sinup extends Component {
     this.state = {
       deviceWidth: width,
       deviceHeight: height,
-      usernameGithub: 'nathangabriel27',
+      usernameGithub: '',
       avatarGithub: '',
       nameGithub: '',
       bioGitHub: '',
@@ -48,7 +49,15 @@ export default class Sinup extends Component {
       [
         { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
         {
-          text: 'OK', onPress: () => this.registerUser(this.state.usernameGithub)
+          text: 'OK', onPress: () => this.registerUser(
+            this.state.usernameGithub,
+            this.state.avatarGithub,
+            this.state.nameGithub,
+            this.state.bioGitHub,
+
+
+
+          )
         },
       ],
       { cancelable: false }
@@ -56,33 +65,37 @@ export default class Sinup extends Component {
   }
 
   registerUser = () => {
-    var self = this
-    fetch(`https://api.github.com/users/nathangabriel27`)
+    fetch(`https://api.github.com/users/${this.state.usernameGithub}`)
       .then(res => res.json())
       .then(res => {
-        console.log('Res:  ', res.login);
-        self.setState({
-          resGit: res
-        })
-        console.log('ResGit:  ', this.state.resGit);
+        //console.log('Res:  ', res.login);
+        this.setState({
+          resGit: res,
+          avatarGithub: res.avatar_url,
+          nameGithub: res.name,
+          bioGitHub: res.bio,
 
-      })
-    const user = {
-      usernameGithub: this.state.usernameGithub,
-    }
-    firebase.database().ref("Users/")
-      .push(user)
-      .then((snapshot) => {
-        Alert.alert(
-          'Registrar',
-          'Confirma o seu registo?',
-          [
-            {
-              text: 'OK', onPress: () => this.backToHome()
-            },
-          ],
-          { cancelable: false }
-        )
+        })
+        let user = {
+          usernameGithub: this.state.usernameGithub,
+          avatarGithub: this.state.avatarGithub,
+          nameGithub: this.state.nameGithub,
+          bioGitHub: this.state.bioGitHub,
+        }
+        firebase.database().ref("Users/")
+          .push(user)
+          .then((snapshot) => {
+            Alert.alert(
+              'Registrar',
+              'Confirma o seu registo?',
+              [
+                {
+                  text: 'OK', onPress: () => this.backToHome()
+                },
+              ],
+              { cancelable: false }
+            )
+          })
       })
   }
 
@@ -109,6 +122,34 @@ export default class Sinup extends Component {
             loadingEnabled
           //onRegionChangeComplete={handleRegionChanged}
           >
+
+            <Marker
+              //usuarios Fixos pra uso  Offline
+
+              coordinate={{
+                latitude: -19.9132301,
+                longitude: -43.9565751
+              }}>
+
+              <Image
+                style={styles.avatar}
+                source={{ uri: 'https://avatars2.githubusercontent.com/u/43018177?s=460&v=4' }}
+              />
+              <Callout
+              /*               onPress={() => {
+                              navigation.navigate('Profile', { github_username: 'nathangabriel27' })
+                            }} 
+                            */
+              >
+                <View style={styles.calloutFixed} >
+                  <Text style={styles.devNameFixed} >Nathan Gabriel Oliveira</Text>
+                  <Text style={styles.devBioFixed} >Sem bio</Text>
+                  <Text style={styles.devtechsFixed} >Tecs: React, React Native, Node</Text>
+
+                </View>
+              </Callout>
+            </Marker>
+
           </MapView>
 
           <TextInput
@@ -286,7 +327,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginRight: 15,
     marginLeft: 14,
-  }
+  },
+  calloutFixed: {
+    width: 260,
+    height: 100
+  },
 
 
 })

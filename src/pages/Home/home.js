@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ActivityIndicator, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ActivityIndicator, Alert, ScrollView, YellowBox } from 'react-native';
 import { Actions } from 'react-native-router-flux'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import firebase from 'firebase'
 import _ from 'lodash'
+console.disableYellowBox = true;
+YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
 
 export default class Home extends Component {
   constructor(props) {
@@ -11,10 +13,8 @@ export default class Home extends Component {
     this.state = {
       numUsers: 50,
       loading: true,
-      refreshing: false,
       data: [],
       usersData: [],
-      githubUsername: 'nathangabriel27',
       resgit: []
     }
   }
@@ -23,48 +23,28 @@ export default class Home extends Component {
     const nat = 'BR'
     fetch(`https://randomuser.me/api/?nat=${nat}&results=${this.state.numUsers}`)
       // usuarios fixos 
-      //fetch(`https://randomuser.me/api/?page=${this.state.numPage}&results=${this.state.numUsers}&nat=br&seed=rdmusr`)
+      //fetch(`https://randomuser.me/api/?page=1&results=${this.state.numUsers}&nat=br`)
 
       .then(res => res.json())
       .then(res => {
         this.setState({
           loading: false,
           data: res.results || [],
-          refreshing: false
         })
 
       })
   }
-
-  loadGitUser = () => {
-    fetch(`https://api.github.com/users/${this.state.githubUsername}`)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          data: res.results || []
-        })
-
-      })
-  }
-
   searchUsers() {
     firebase.database().ref("Users")
       .once("value")
       .then((snapshot) => {
         const usersMaped = _.values(snapshot.val());
         this.setState({ usersData: usersMaped })
-        console.log(usersData)
+        // console.log(this.state.usersData)
       })
   }
 
-  handleRefresh = () => {
-    this.setState({
-      refreshing: true,
-      nat: 'BR'
-    }, () => {
-      this.loadGitUser()
-    })
-  }
+
   setings() {
     Actions.register()
   }
@@ -75,7 +55,7 @@ export default class Home extends Component {
     Actions.userDetails({ item })
   }
   componentDidMount() {
-    this.loadUsers();
+    this.loadUsers()
     this.searchUsers()
   }
 
@@ -88,12 +68,16 @@ export default class Home extends Component {
         <Image
           //source={{ uri: item.picture.large }}
           //source={{ uri: item.picture.thumbnail }}
-          source={{ uri: 'https://avatars2.githubusercontent.com/u/43018177?s=460&v=4' }}
+          source={{ uri: `${item.avatarGithub}` }}
           style={styles.avatarGit}
 
         />
 
-        <Text style={styles.textGit}> {item.usernameGithub} </Text>
+        <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={styles.textGitName}> {item.nameGithub} </Text>
+          <Text style={styles.textGit}> {item.usernameGithub} </Text>
+          {/* <Text style={styles.textGit}> {item.bioGitHub} </Text> */}
+        </View>
         <View style={styles.iconGitContainer}>
           <Ionicons name="logo-github" style={styles.iconGit} />
         </View>
@@ -136,6 +120,7 @@ export default class Home extends Component {
           <ScrollView>
 
             <View style={styles.container}>
+
               <FlatList
                 data={this.state.usersData}
                 renderItem={({ item }) => this.renderUser(item)}
@@ -194,8 +179,6 @@ export default class Home extends Component {
 
                 )}
                 keyExtractor={item => item.email}
-                refreshing={this.state.refreshing}
-                onRefresh={this.state.handleRefresh}
 
               >
 
@@ -241,6 +224,8 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     //borderBottomColor: '#ccc',
     //borderBottomWidth: 15,
 
@@ -300,9 +285,17 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   textGit: {
+    fontSize: 17,
     color: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  textGitName: {
+    fontSize: 19,
+    color: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: 'bold'
   },
   info: {
     flex: 1,

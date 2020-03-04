@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, ImageBackground, FlatList, TouchableOpac
 import MapView, { Marker } from 'react-native-maps';
 
 var { height, width } = Dimensions.get('window')
-
+console.disableYellowBox = true;
 
 export default class UserDetails extends Component {
   constructor(props) {

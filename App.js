@@ -6,7 +6,7 @@ import firebase from 'firebase';
 console.disableYellowBox = true;
 
 class App extends Component {
-  componentWillMount() {
+ async componentWillMount() {
     //Posso Fazer qualquer tipo de configuração global aqui como por exemplo o Firebase
     if (firebase.apps.length === 0) {
       firebase.initializeApp({
