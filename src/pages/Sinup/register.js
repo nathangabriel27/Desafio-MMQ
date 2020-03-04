@@ -1,165 +1,147 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity, Dimensions } from 'react-native'
-import MapView, { Marker, Callout } from 'react-native-maps'
-import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location'
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View, Alert, Dimensions, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { Ionicons, MaterialIcons, Entypo } from '@expo/vector-icons'
+import { Actions } from 'react-native-router-flux';
+import MapView, { Marker, Callout } from 'react-native-maps'
+
+
 import firebase from "firebase"
 
+var { height, width } = Dimensions.get('window');
+
 import Search from '../components/Search/search'
-var { height, width } = Dimensions.get('window')
 
+// import { Container } from './styles';
 
-export default function Setings({ navigation }) {
+export default class Sinup extends Component {
 
-  const [currentRegion, setCurrentRegion] = useState(null)
-  const [gitDetails, setGitDetails] = useState('')
-  const [regionDetails, setRegionDetails] = useState('')
-  /*   const [devs, setDevs] = useState([])
-    const [techs, setTechs] = useState(''); */
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: null,
+      deviceWidth: width,
+      deviceHeight: height,
+      usernameGithub: '',
+      avatarGithub: '',
+      nameGithub: '',
+      bioGitHub: '',
+      resGit: [],
 
-
-
-  useEffect(() => {
-    async function loadInitialPosition() {
-      const { granted } = await requestPermissionsAsync();
-      if (granted) {
-        const { coords } = await getCurrentPositionAsync({
-          enableHighAccuracy: true,
-        })
-        const { latitude, longitude } = coords
-        setCurrentRegion({
-          latitude,
-          longitude,
-          latitudeDelta: 0.07,
-          longitudeDelta: 0.07
-        })
-      }
-    }
-
-    loadInitialPosition()
-  }, [])
-
-  if (!currentRegion) {
-    return null;
+    };
   }
 
-  /*   async function loadDevs() {
-      const { latitude, longitude } = currentRegion;
-   
-      const response = await api.get('/search', {
-        params: {
-          latitude,
-          longitude,
-          techs
-        }
+
+  componentDidMount() {
+    const { currentUser } = firebase.auth();
+    if (currentUser) {
+      console.log("Estou logado: ", currentUser.uid)
+    }
+  }
+  backToHome() {
+    Actions.home()
+  }
+  toRegister() {
+
+    Keyboard.dismiss()
+    Alert.alert(
+      'Registrar',
+      'Confirma o seu registo?',
+      [
+        { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        {
+          text: 'OK', onPress: () => this.registerUser(this.state.usernameGithub)
+        },
+      ],
+      { cancelable: false }
+    )
+  }
+
+  registerUser() {
+    fetch(`https://api.github.com/users/nathangabriel27?cliente_id=Iv1.6fb8eedfa7524395&f916990317cfe62292aa217b277130b1bc194904`)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          resGit: res | []
+
+        })
+        console.log('ffalkj',this.state.resGit);
+
       })
-      setDevs(response.data.devs);
-    } */
-  /*   function handleRegionChanged(region) {
-      setCurrentRegion(region)
-    } */
+    const user = {
+      usernameGithub: this.state.usernameGithub,
+    }
+    firebase.database().ref("Users/")
+      .push(user)
+      .then((snapshot) => {
+        Alert.alert(
+          'Registrar',
+          'Confirma o seu registo?',
+          [
+            {
+              text: 'OK', onPress: () => this.backToHome()
+            },
+          ],
+          { cancelable: false }
+        )
+      })
+  }
 
+  render() {
+    return (
 
-  return (
-    <>
-      <MapView
-        initialRegion={{
-          latitude: -19.9132301,
-          longitude: -43.9565751,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        style={styles.map}
-        showsUserLocation
-        loadingEnabled
-      //onRegionChangeComplete={handleRegionChanged}
-      >
+      <>
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={0}
+          behavior='padding'
+          style={{ flex: 2 }}
+          enabled={false}
+        >
 
+          <MapView
+            initialRegion={{
+              latitude: -19.9132301,
+              longitude: -43.9565751,
+              latitudeDelta: 0.2,
+              longitudeDelta: 0.2,
+            }}
+            style={styles.map}
+            showsUserLocation
+            loadingEnabled
+          //onRegionChangeComplete={handleRegionChanged}
+          >
+          </MapView>
 
-
-        <Marker
-          //usuarios Fixos pra uso  Offline
-
-          coordinate={{
-            latitude: -19.9132301,
-            longitude: -43.9565751
-          }}>
-
-          <Image
-            style={styles.avatar}
-            source={{ uri: 'https://avatars2.githubusercontent.com/u/43018177?s=460&v=4' }}
+          <TextInput
+            type='text'
+            style={styles.textInput}
+            placeholder="Seu usuario do Github ..."
+            placeholderTextColor='rgba(0,0,0,0.75)'
+            value={this.state.usernameGithub}
+            onChangeText={e => this.setState({ usernameGithub: e })}
           />
 
-          <Callout
-            onPress={() => {
-              navigation.navigate('Profile', { github_username: 'nathangabriel27' })
-            }} >
-            <View style={styles.calloutFixed} >
-              <Text style={styles.devNameFixed} >Nathan Gabriel</Text>
-              <Text style={styles.devfixedFixed} >Fixed</Text>
-              <Text style={styles.devBioFixed} >Sem bio</Text>
-              <Text style={styles.devtechsFixed} >React, React Native, Node</Text>
+          <Search />
 
+
+          <TouchableOpacity onPress={() => this.toRegister()} style={styles.dataSubmit}>
+
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+
+              <Ionicons name="logo-github" style={styles.icon} />
+              <Text style={styles.dataSubmitTeText}>
+                Enviar Git + localização
+            </Text>
+              <Entypo name="location" style={styles.icon} />
             </View>
-          </Callout>
-        </Marker>
+          </TouchableOpacity>
 
-        {/*         {devs.map(dev => (
 
-          //usuarios populados pela API
-          <Marker
-            key={dev._id}
-            coordinate={{
-              longitude: dev.location.coordinates[0],
-              latitude: dev.location.coordinates[1],
-            }}>
 
-            <Image
-              style={styles.avatar}
-              source={{ uri: dev.avatar_url }}
-            />
+        </KeyboardAvoidingView>
+      </>
+    )
 
-            <Callout
-              onPress={() => {
-                navigation.navigate('Profile', { github_username: dev.github_username })
-              }} >
-              <View style={styles.callout} >
-                <Text style={styles.devName} >{dev.name}</Text>
-                <Text style={styles.devBio} >{dev.bio}</Text>
-                <Text style={styles.devtechs} >{dev.techs.join(', ')}</Text>
-
-              </View>
-            </Callout>
-          </Marker>
-
-        ))
-        } 
-      */}
-      </MapView >
-
-      
-      <TextInput
-        style={styles.textInput}
-        placeholder="Seu usuario do Github ..."
-        placeholderTextColor='rgba(0,0,0,0.75)'
-      />
-
-      <Search />
-
-      <TouchableOpacity style={styles.dataSubmit}>
-
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-
-          <Ionicons name="logo-github" style={styles.icon} />
-          <Text style={styles.dataSubmitTeText}>
-            Enviar Git com localização
-        </Text>
-          <Entypo name="location" style={styles.icon} />
-        </View>
-      </TouchableOpacity>
-
-    </>
-  );
+  }
 }
 
 const styles = StyleSheet.create({

@@ -7,6 +7,8 @@ import Home from './src/pages/Home/home'
 import UserDetails from './src/pages/UserDetails/userDetails'
 import Setings from './src/pages/Setings/setings'
 import Register from './src/pages/Sinup/register'
+import UserGit from './src/pages/UserGit/userGit'
+import Profile from './src/pages/components/Profile/profile'
 
 class RouterComponent extends Component {
   constructor(props) {
@@ -24,8 +26,9 @@ class RouterComponent extends Component {
               <Scene
                 key='setings'
                 component={Setings}
-                />
+              />
               <Scene key='home'
+                initial
                 component={Home}
                 
                 />
@@ -37,7 +40,14 @@ class RouterComponent extends Component {
               <Scene
                 key='register'
                 component={Register}
-                initial
+                />
+              <Scene
+                key='userGit'
+                component={UserGit}
+                />
+              <Scene
+                key='profile'
+                component={Profile}
               />
             </Scene>
           </Scene>

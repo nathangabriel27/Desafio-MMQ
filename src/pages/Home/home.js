@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ActivityIndicator, Alert, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
-
+import firebase from 'firebase'
+import _ from 'lodash'
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numUsers: 1000,
+      numUsers: 50,
       loading: true,
       data: [],
-
+      usersData: [],
+      githubUsername: 'nathangabriel27',
+      resgit: []
     }
   }
   loadUsers = () => {
@@ -30,24 +33,66 @@ export default class Home extends Component {
       })
   }
 
+  loadGitUser = () => {
+    fetch(`https://api.github.com/users/${this.state.githubUsername}`)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          data: res.results || []
+        })
 
-  teste() {
-    Alert.alert('teste')
+      })
+  }
+
+  searchUsers() {
+    firebase.database().ref("Users")
+      .once("value")
+      .then((snapshot) => {
+        const usersMaped = _.values(snapshot.val());
+        this.setState({ usersData: usersMaped })
+        console.log(usersData)
+      })
   }
   setings() {
-    Actions.setings()
+    Actions.register()
   }
-
-  userDetails(item ) {
-    
+  profileGit() {
+    Actions.profile()
+  }
+  userDetails(item) {
     Actions.userDetails({ item })
   }
-
   componentDidMount() {
-    this.loadUsers()
-
+    this.loadUsers();
+    this.searchUsers()
   }
 
+  renderUser(item) {
+    return (
+      <TouchableOpacity style={styles.cardGit}
+        onPress={() => this.profileGit(usernameGithub)}
+
+      >
+        <Image
+          //source={{ uri: item.picture.large }}
+          //source={{ uri: item.picture.thumbnail }}
+          source={{ uri: 'https://avatars2.githubusercontent.com/u/43018177?s=460&v=4' }}
+          style={styles.avatarGit}
+
+        />
+
+        <Text style={styles.textGit}> {item.usernameGithub} </Text>
+        <View style={styles.iconGitContainer}>
+          <Ionicons name="logo-github" style={styles.iconGit} />
+        </View>
+
+      </TouchableOpacity >
+
+    )
+  }
+  /*   componentDidUpdate() {
+      this.searchUsers()
+    } */
   render() {
     if (this.state.loading) {
       return (
@@ -76,65 +121,72 @@ export default class Home extends Component {
 
           </TouchableOpacity>
 
+          <ScrollView>
 
-          <View style={styles.container}>
-            <FlatList
-              data={this.state.data}
+            <View style={styles.container}>
+              <FlatList
+                data={this.state.usersData}
+                renderItem={({ item }) => this.renderUser(item)}
+              />
 
-              renderItem={({ item }) => (
+              <FlatList
+                data={this.state.data}
 
-                <TouchableOpacity
+                renderItem={({ item }) => (
 
-                  style={styles.card}
-                  onPress={() => { this.userDetails(item) }}
-                >
+                  <TouchableOpacity
 
-                  <Image
-                    //source={{ uri: item.picture.large }}
-                    //source={{ uri: item.picture.thumbnail }}
-                    source={{ uri: item.picture.medium }}
-                    style={styles.avatar}
+                    style={styles.card}
+                    onPress={() => { this.userDetails(item) }}
+                  >
 
-                  />
+                    <Image
+                      //source={{ uri: item.picture.large }}
+                      //source={{ uri: item.picture.thumbnail }}
+                      source={{ uri: item.picture.medium }}
+                      style={styles.avatar}
 
-                  <View style={styles.info}>
+                    />
 
-                    <View style={styles.dataUser}>
+                    <View style={styles.info}>
 
-                      <Text style={styles.name}>{item.name.first} {item.name.last} </Text>
-                      <Text style={styles.email}>{item.email}</Text>
+                      <View style={styles.dataUser}>
+
+                        <Text style={styles.name}>{item.name.first} {item.name.last} </Text>
+                        <Text style={styles.email}>{item.email}</Text>
+
+                      </View>
+
+                      <View style={styles.containerIcons}>
+
+
+                        <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }} >
+                          <Ionicons name="ios-phone-portrait" size={30} color='#5c060a' />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }} >
+                          <Ionicons name="ios-mail" size={30} color='#5c060a' />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }}>
+                          <Ionicons name="ios-pin" size={30} color='#5c060a' />
+                        </TouchableOpacity>
+
+
+                      </View>
 
                     </View>
 
-                    <View style={styles.containerIcons}>
+                  </TouchableOpacity>
 
+                )}
+                keyExtractor={item => item.email}
+              >
 
-                      <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }} >
-                        <Ionicons name="ios-phone-portrait" size={30} color='#5c060a' />
-                      </TouchableOpacity>
+              </FlatList>
 
-                      <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }} >
-                        <Ionicons name="ios-mail" size={30} color='#5c060a' />
-                      </TouchableOpacity>
-
-                      <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }}>
-                        <Ionicons name="ios-pin" size={30} color='#5c060a' />
-                      </TouchableOpacity>
-
-
-                    </View>
-
-                  </View>
-
-                </TouchableOpacity>
-
-              )}
-              keyExtractor={item => item.email}
-            >
-
-            </FlatList>
-
-          </View >
+            </View >
+          </ScrollView>
         </>
       );
     }
@@ -189,6 +241,26 @@ const styles = StyleSheet.create({
     marginVertical: 10
 
   },
+  cardGit: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    //borderBottomColor: '#ccc',
+    //borderBottomWidth: 15,
+
+    //Estilos de elevacao android e ios
+    borderRadius: 10,
+    elevation: 4,
+    backgroundColor: '#000',
+    shadowOffset: { width: 2, height: 1 },
+    shadowColor: '#e9e9e9e9',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+
+    marginHorizontal: 12,
+    marginVertical: 10
+  },
   avatar: {
     width: 60,
     height: 60,
@@ -199,6 +271,22 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderColor: '#5c0408',
     borderWidth: 3,
+  },
+  avatarGit: {
+    width: 60,
+    height: 60,
+    marginRight: 5,
+    alignSelf: 'center',
+    marginHorizontal: 5,
+    marginVertical: 5,
+    borderRadius: 50,
+    borderColor: '#fff',
+    borderWidth: 3,
+  },
+  textGit: {
+    color: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   info: {
     flex: 1,
@@ -240,4 +328,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  iconGit: {
+    fontSize: 58,
+    color: '#fff',
+    marginRight: 15,
+    marginLeft: 14,
+    marginRight: 5,
+    alignSelf: 'center',
+    marginHorizontal: 5,
+    marginVertical: 5,
+
+  },
+  iconGitContainer: {
+
+  }
 });
