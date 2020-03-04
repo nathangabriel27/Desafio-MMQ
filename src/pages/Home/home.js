@@ -78,7 +78,6 @@ export default class Home extends Component {
 
         <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Text style={styles.textGitName}> {item.nameGithub} </Text>
-          <Ionicons name="logo-github" style={{ fontSize: 10, color :'#fff'}} />
           <Text style={styles.textGit}> {item.usernameGithub} </Text>
           {/* <Text style={styles.textGit}> {item.bioGitHub} </Text> */}
         </View>

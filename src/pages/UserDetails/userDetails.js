@@ -19,10 +19,12 @@ export default class UserDetails extends Component {
     }
   }
   async componentDidMount() {
+    console.log(this.state.item.location.street.name);
+    
     this.codCep(),
 
-    navigator.geolocation.getCurrentPosition(
-      () => {
+      navigator.geolocation.getCurrentPosition(
+        () => {
           this.setState({
             region: {
               latitude: this.state.latitude,
@@ -31,15 +33,15 @@ export default class UserDetails extends Component {
               longitudeDelta: 0.01
             }
           });
-      }, //  sucesso
-      () => { },
-      {
-        timeout: 2000,
-        enableHighAccuracy: true,
-        maximumAge: 1000
-      }
+        }, //  sucesso
+        () => { },
+        {
+          timeout: 2000,
+          enableHighAccuracy: true,
+          maximumAge: 1000
+        }
 
-    );
+      );
   }
 
   codCep = () => {
@@ -90,16 +92,27 @@ export default class UserDetails extends Component {
         <View style={styles.main} >
 
           <ScrollView style={styles.scrollView}>
+            <Text style={styles.scrollViewTitle}>Nome</Text>
+            <Text style={styles.scrollViewDesciption}>{this.state.item.name.first} {this.state.item.name.last}</Text>
+            <Text style={styles.scrollViewTitle}>Idade</Text>
+            <Text style={styles.scrollViewDesciption}>{this.state.item.dob.age}</Text>
+            <Text style={styles.scrollViewTitle}>Email</Text>
+            <Text style={styles.scrollViewDesciption}>{this.state.item.email}</Text>
+            <Text style={styles.scrollViewTitle}>Telefone</Text>
+            <Text style={styles.scrollViewDesciption}>{this.state.item.phone}</Text>
+            <Text style={styles.scrollViewTitle}>Aniversario</Text>
+            <Text style={styles.scrollViewDesciption}>{this.state.item.dob.date}</Text>
+            <Text style={styles.scrollViewTitle}>Endereço</Text>
+            <Text style={styles.scrollViewDesciption}>
+              {this.state.item.location.street.name}, {this.state.item.location.street.number} - {this.state.item.location.city}, {this.state.item.location.state}
 
-            <Text style={styles.text}>Nome : {this.state.item.name.first} {this.state.item.name.last}</Text>
-            <Text style={styles.text}>idade:{this.state.item.dob.age}</Text>
-            <Text style={styles.text}>Email: {this.state.item.email}</Text>
-            <Text style={styles.text}>Telefone: {this.state.item.phone}</Text>
-            <Text style={styles.text}>Aniversario:{this.state.item.dob.date}</Text>
+
+            </Text>
+
 
             <Text style={styles.text}>latitude:{this.state.latitude}</Text>
             <Text style={styles.text}>longitude:{this.state.longitude}</Text>
-            <Text style={styles.text}>Endereço: </Text>
+
 
 
 
@@ -167,6 +180,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
 
 
+  },
+  scrollViewTitle:{
+    fontSize: 21,
+    color: '#5c0408',
+    fontWeight: 'bold',
+    marginLeft: 20
+  },
+  scrollViewDesciption:{
+    fontSize: 18,
+    color: '#000',
+    marginLeft: 35
   },
 
   text: {

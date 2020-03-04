@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ActivityIndicator, Alert, ScrollView, YellowBox } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import MapView, { Marker } from 'react-native-maps';
+import { Actions } from 'react-native-router-flux'
+
 var { height, width } = Dimensions.get('window')
 
 export default class UserDetails extends Component {
@@ -18,7 +20,8 @@ export default class UserDetails extends Component {
     console.log(this.state.item.Location.latitude);
 
   }
-  profileGit(item) {
+  profileGit() {
+    const item = this.state.item
     Actions.profile({ item })
   }
   render() {
@@ -52,7 +55,10 @@ export default class UserDetails extends Component {
 
           </View>
 
-          <TouchableOpacity style={styles.detailsIcon}>
+          <TouchableOpacity style={styles.detailsIcon}
+          onPress={() => this.profileGit(this.state.item.usernameGithub)}
+
+          >
             <Ionicons name="logo-github" style={styles.icon} />
           </TouchableOpacity>
 
