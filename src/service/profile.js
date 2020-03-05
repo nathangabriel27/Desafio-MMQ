@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { WebView } from 'react-native-webview';
 
-import { View } from 'react-native';
+import { StatusBar } from 'react-native';
 
 // import { Container } from './styles';
 
@@ -15,14 +15,18 @@ export default class Profile extends Component {
     }
   }
   render() {
-    console.log(this.state.item );
-    
+    console.log(this.state.item);
+
     return (
-      <WebView
-      log
-        source={{ uri: `https://github.com/${this.state.item.usernameGithub}` }}
-        style={{ marginTop: 20 }}
-      />
+      <>
+        <StatusBar  barStyle={'light-content-content'} hidden={true}/>
+
+        <WebView
+          log
+          source={{ uri: `https://github.com/${this.state.item.usernameGithub}` }}
+          style={{ marginTop: 0 }}
+        />
+      </>
     );
   }
 }

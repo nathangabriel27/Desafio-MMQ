@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Alert, Image, Dimensions, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView } from 'react-native';
+import { Platform, StatusBar, StyleSheet, Text, View, Alert, Image, Dimensions, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { Ionicons, MaterialIcons, Entypo } from '@expo/vector-icons'
 import { Actions } from 'react-native-router-flux';
 import MapView, { Marker, Callout } from 'react-native-maps'
@@ -129,6 +129,7 @@ export default class Sinup extends Component {
     return (
 
       <>
+        <StatusBar  barStyle={'dark-content'}/>
         <KeyboardAvoidingView
           keyboardVerticalOffset={0}
           behavior='padding'
