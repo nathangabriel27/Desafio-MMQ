@@ -6,8 +6,6 @@ import MapView, { Marker, Callout } from 'react-native-maps'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import _ from 'lodash'
 
-
-
 console.disableYellowBox = true;
 
 import firebase from "firebase"
@@ -430,11 +428,6 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginLeft: 14,
   },
-  calloutFixed: {
-    width: 260,
-    height: 100
-  },
-
 
 })
 
