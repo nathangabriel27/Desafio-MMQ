@@ -44,12 +44,12 @@ export default class Home extends Component {
       .then((snapshot) => {
         const usersMaped = _.values(snapshot.val());
         this.setState({ usersData: usersMaped })
-        // console.log(this.state.usersData)
+        //console.log(this.state.usersData)
       })
   }
 
 
-  setings() {
+  register() {
     Actions.register()
   }
   profileGit(item) {
@@ -91,9 +91,7 @@ export default class Home extends Component {
 
     )
   }
-  /*   componentDidUpdate() {
-      this.searchUsers()
-    } */
+
   render() {
     if (this.state.loading) {
       return (
@@ -110,7 +108,7 @@ export default class Home extends Component {
       return (
         <>
           <TouchableOpacity style={styles.main}
-            onPress={() => this.setings()}
+            onPress={() => this.register()}
 
           >
             <Text style={styles.mainText} >Desafio MasterMaq
@@ -164,10 +162,6 @@ export default class Home extends Component {
 
                         <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }} >
                           <Ionicons name="ios-phone-portrait" size={30} color='#5c060a' />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }} >
-                          <Ionicons name="ios-mail" size={30} color='#5c060a' />
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }}>

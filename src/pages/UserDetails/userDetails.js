@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground, FlatList, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import moment from 'moment'
 
 var { height, width } = Dimensions.get('window')
 console.disableYellowBox = true;
@@ -14,13 +15,13 @@ export default class UserDetails extends Component {
       item: props.item,
       region: null,
       loading: true,
-      latitude: 37.78825,
-      longitude: -122.4324,
+      latitude: -19.9223687,
+      longitude: -43.9423022,
     }
   }
   async componentDidMount() {
     console.log(this.state.item.location.street.name);
-    
+
     this.codCep(),
 
       navigator.geolocation.getCurrentPosition(
@@ -100,22 +101,12 @@ export default class UserDetails extends Component {
             <Text style={styles.scrollViewDesciption}>{this.state.item.email}</Text>
             <Text style={styles.scrollViewTitle}>Telefone</Text>
             <Text style={styles.scrollViewDesciption}>{this.state.item.phone}</Text>
-            <Text style={styles.scrollViewTitle}>Aniversario</Text>
-            <Text style={styles.scrollViewDesciption}>{this.state.item.dob.date}</Text>
+            <Text style={styles.scrollViewTitle}>Nascimento</Text>
+            <Text style={styles.scrollViewDesciption}>{moment(this.state.item.dob.date).format('DD / MM / YYYY')},  {this.state.item.dob.age} anos. </Text>
             <Text style={styles.scrollViewTitle}>Endereço</Text>
             <Text style={styles.scrollViewDesciption}>
               {this.state.item.location.street.name}, {this.state.item.location.street.number} - {this.state.item.location.city}, {this.state.item.location.state}
-
-
             </Text>
-
-
-            <Text style={styles.text}>latitude:{this.state.latitude}</Text>
-            <Text style={styles.text}>longitude:{this.state.longitude}</Text>
-
-
-
-
 
             <View style={styles.mapView}>
 
@@ -124,19 +115,25 @@ export default class UserDetails extends Component {
                 initialRegion={region}
                 /*
                 {
-                latitude: this.state.item.location.coordinates.latitude,
-                longitude: this.state.item.location.coordinates.longitude,
-
-           */
+                  latitude: this.state.item.location.coordinates.latitude,
+                  longitude: this.state.item.location.coordinates.longitude,
+                  
+                  */
                 showsUserLocation
               >
                 <Marker.Animated
                   coordinate={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
+                    latitude: this.state.latitude,
+                    longitude: this.state.longitude,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.01
                   }}
                 />
               </MapView>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 15 }}>Fixo : latitude {this.state.latitude}  </Text>
+                <Text style={{ fontSize: 15 }}>longitude {this.state.longitude}</Text>
+              </View>
 
             </View>
           </ScrollView>
@@ -181,27 +178,16 @@ const styles = StyleSheet.create({
 
 
   },
-  scrollViewTitle:{
+  scrollViewTitle: {
     fontSize: 21,
     color: '#5c0408',
     fontWeight: 'bold',
     marginLeft: 20
   },
-  scrollViewDesciption:{
+  scrollViewDesciption: {
     fontSize: 18,
     color: '#000',
     marginLeft: 35
-  },
-
-  text: {
-    //color: '#fff',
-    color: '#000',
-    fontSize: 25,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    alignSelf: 'flex-start',
-    marginLeft: '10%',
-
   },
   mapView: {
     backgroundColor: '#fff',

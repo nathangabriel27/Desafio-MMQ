@@ -4,6 +4,8 @@ import { Ionicons, MaterialIcons, Entypo } from '@expo/vector-icons'
 import { Actions } from 'react-native-router-flux';
 import MapView, { Marker, Callout } from 'react-native-maps'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import _ from 'lodash'
+
 
 
 console.disableYellowBox = true;
@@ -20,8 +22,8 @@ export default class Sinup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      deviceWidth: width,
       deviceHeight: height,
+      deviceWidth: width,
       usernameGithub: '',
       avatarGithub: '',
       nameGithub: '',
@@ -30,17 +32,29 @@ export default class Sinup extends Component {
       searchFocused: false,
       location: {},
       locationDescription: '',
+      usersData: [],
 
     };
   }
 
 
   async componentDidMount() {
+    this.searchUsers()
     const { currentUser } = firebase.auth();
     if (currentUser) {
       console.log("Estou logado: ", currentUser.uid)
     }
   }
+  searchUsers() {
+    firebase.database().ref("Users")
+      .once("value")
+      .then((snapshot) => {
+        const usersMaped = _.values(snapshot.val());
+        this.setState({ usersData: usersMaped })
+        console.log("userdata", this.state.usersData)
+      })
+  }
+
   backToHome() {
     Actions.home()
   }
@@ -95,7 +109,7 @@ export default class Sinup extends Component {
           .then((snapshot) => {
             Alert.alert(
               'Sucesso !!',
-              'Cadastramos voce ao nosso banco de dados, agora so conferir na tela que vamos lhe direcionar seu perfil. =D',
+              'Cadastramos você ao nosso banco de dados, agora so conferir na tela que vamos lhe direcionar seu perfil =D',
               [
                 {
                   text: 'OK', onPress: () => this.backToHome()
@@ -109,6 +123,9 @@ export default class Sinup extends Component {
 
   render() {
     const { searchFocused } = this.state
+    const devs = this.state.usersData
+    console.log('DEVS: ', devs);
+
     return (
 
       <>
@@ -132,32 +149,28 @@ export default class Sinup extends Component {
           //onRegionChangeComplete={handleRegionChanged}
           >
 
-            <Marker
-              //usuarios Fixos pra uso  Offline
 
-              coordinate={{
-                latitude: -19.9132301,
-                longitude: -43.9565751
-              }}>
+            {devs.map(dev => (
+              <Marker
+                coordinate={{
+                  latitude: dev.Location.latitude,
+                  longitude: dev.Location.longitude
+                }}>
+                <Image
+                  style={styles.avatar}
+                  source={{ uri: dev.avatarGithub }}
+                />
+                <Callout
+                >
+                  <View style={styles.calloutFixed} >
+                    <Text style={styles.devNameFixed} >{dev.nameGithub}</Text>
+                    <Text style={styles.devtechsFixed} >{dev.usernameGithub}</Text>
+                    <Text style={styles.devBioFixed} >{dev.bioGitHub}</Text>
+                  </View>
+                </Callout>
+              </Marker>
+            ))}
 
-              <Image
-                style={styles.avatar}
-                source={{ uri: 'https://avatars2.githubusercontent.com/u/43018177?s=460&v=4' }}
-              />
-              <Callout
-              /*               onPress={() => {
-                              navigation.navigate('Profile', { github_username: 'nathangabriel27' })
-                            }} 
-                            */
-              >
-                <View style={styles.calloutFixed} >
-                  <Text style={styles.devNameFixed} >Nathan Gabriel Oliveira</Text>
-                  <Text style={styles.devBioFixed} >Sem bio</Text>
-                  <Text style={styles.devtechsFixed} >Tecs: React, React Native, Node</Text>
-
-                </View>
-              </Callout>
-            </Marker>
 
           </MapView>
 
@@ -176,18 +189,15 @@ export default class Sinup extends Component {
             onPress={(data, details) => {
               /*   
               console.log("vicinity: ", details.vicinity);
-                 console.log("data: ", data);
-                      console.log( "details.geometry.location -- ", details.geometry.location);
-                      */
-
-
+              console.log("data: ", data);
+              console.log( "details.geometry.location -- ", details.geometry.location);
+              */
               this.setState({
                 location: details.geometry.location,
                 locationDescription: details.vicinity
 
               })
               console.log("location :", this.state.locationDescription);
-
             }}
             query={{
               key: 'AIzaSyBVvpE2A3__qwwnX2vPnD_A1epgVsEKWQ0',
@@ -261,21 +271,15 @@ export default class Sinup extends Component {
             }}
           />
 
-
           <TouchableOpacity onPress={() => this.toRegister()} style={styles.dataSubmit}>
-
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-
               <Ionicons name="logo-github" style={styles.icon} />
               <Text style={styles.dataSubmitTeText}>
                 Enviar Git + localização
-            </Text>
+              </Text>
               <Entypo name="location" style={styles.icon} />
             </View>
           </TouchableOpacity>
-
-
-
         </KeyboardAvoidingView>
       </>
     )

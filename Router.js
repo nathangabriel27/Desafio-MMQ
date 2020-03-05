@@ -7,7 +7,7 @@ import Home from './src/pages/Home/home'
 import UserDetails from './src/pages/UserDetails/userDetails'
 import Setings from './src/pages/Setings/setings'
 import Register from './src/pages/Signup/register'
-import Profile from './src/pages/components/Profile/profile'
+import Profile from './src/service/profile'
 import UserDetailsGit from './src/pages/UserDetails/userDetailsGit'
 
 class RouterComponent extends Component {
@@ -31,22 +31,23 @@ class RouterComponent extends Component {
                 component={Home}
                 initial
 
-                />
+              />
+              <Scene
+                key='register'
+                component={Register}
+              />
               <Scene
                 key='userDetails'
                 component={UserDetails}
-                />
+              />
               <Scene
                 key='userDetailsGit'
                 component={UserDetailsGit}
               />
 
               <Scene
-                key='register'
-                component={Register}
-              />
-              <Scene
                 key='profile'
+                
                 component={Profile}
               />
             </Scene>
