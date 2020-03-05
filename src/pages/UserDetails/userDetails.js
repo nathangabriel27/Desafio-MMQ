@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, FlatList, TouchableOpacity, ScrollView, Dimensions , StatusBar} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  ScrollView,
+  Dimensions,
+  StatusBar
+} from 'react-native';
+
 import MapView, { Marker } from 'react-native-maps';
 import moment from 'moment'
 
 var { height, width } = Dimensions.get('window')
-console.disableYellowBox = true;
+
+console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
 
 export default class UserDetails extends Component {
   constructor(props) {
@@ -14,7 +25,6 @@ export default class UserDetails extends Component {
       deviceHeight: height,
       item: props.item,
       region: null,
-      loading: true,
       latitude: -19.9223687,
       longitude: -43.9423022,
     }
@@ -38,16 +48,12 @@ export default class UserDetails extends Component {
           enableHighAccuracy: true,
           maximumAge: 1000
         }
-
       );
   }
-
   codCep = () => {
     fetch('https://maps.googleapis.com/maps/api/geocode/json?address=31250320,+BR&key=AIzaSyBJSz-eJVItINRcVGL8XJYSBGLvSTGqYls')
       .then(res => res.json())
       .then(data => {
-
-
         data.results.map(item => {
           this.setState({
             latitude: item.geometry.location.lat,
@@ -59,32 +65,26 @@ export default class UserDetails extends Component {
       })
   }
 
-
   render() {
     const { region } = this.state
     return (
       <View style={styles.container}>
-        <StatusBar barStyle={'dark-content'}  />
-        <View style={styles.header}>
+        <StatusBar barStyle={'dark-content'} />
 
+        <View style={styles.header}>
           <ImageBackground
             source={{ uri: this.state.item.picture.large }}
             style={styles.imageBackground}
           />
-
-
           <Image
             source={{ uri: this.state.item.picture.large }}
             //source={{ uri: this.state.item.picture.thumbnail }}
             //source={{ uri: this.state.item.picture.medium }}
             style={styles.avatar}
-
           />
-
         </View>
 
         <View style={styles.main} >
-
           <ScrollView style={styles.scrollView}>
             <Text style={styles.scrollViewTitle}>Nome</Text>
             <Text style={styles.scrollViewDesciption}>{this.state.item.name.first} {this.state.item.name.last}</Text>
@@ -102,16 +102,9 @@ export default class UserDetails extends Component {
             </Text>
 
             <View style={styles.mapView}>
-
               <MapView
                 style={styles.mapStyle}
                 initialRegion={region}
-                /*
-                {
-                  latitude: this.state.item.location.coordinates.latitude,
-                  longitude: this.state.item.location.coordinates.longitude,
-                  
-                  */
                 showsUserLocation
               >
                 <Marker.Animated
@@ -123,9 +116,10 @@ export default class UserDetails extends Component {
                   }}
                 />
               </MapView>
+
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 15 }}>Fixo : latitude {this.state.latitude}  </Text>
-                <Text style={{ fontSize: 15 }}>longitude {this.state.longitude}</Text>
+                <Text style={{ fontSize: 15 }} maxLength={4}>longitude {this.state.longitude}</Text>
               </View>
 
             </View>
@@ -183,8 +177,8 @@ const styles = StyleSheet.create({
     marginLeft: 35
   },
   mapView: {
-    backgroundColor: '#fff',
     flex: 1,
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: '10%',
@@ -194,13 +188,19 @@ const styles = StyleSheet.create({
     flex: 1,
     width: 400,
     height: 400,
-    borderRadius: 4000
+    marginTop: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    marginHorizontal: 0,
+    marginVertical: 0,
+
   },
   avatar: {
     width: 200,
     height: 200,
     alignSelf: 'center',
     justifyContent: 'center',
+    marginTop: '20%',
     marginRight: 0,
     marginBottom: '25%',
     marginHorizontal: 0,
@@ -213,12 +213,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: width * 1,
     height: height * 0.45,
-    justifyContent: 'center',
     opacity: 0.3
-  },
-  loading: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

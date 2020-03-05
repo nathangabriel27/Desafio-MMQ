@@ -5,6 +5,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { Actions } from 'react-native-router-flux'
 
 var { height, width } = Dimensions.get('window')
+console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
 
 export default class UserDetails extends Component {
   constructor(props) {
@@ -16,10 +17,6 @@ export default class UserDetails extends Component {
     }
   }
 
-  async componentDidMount() {
-    console.log(this.state.item.Location.latitude);
-
-  }
   profileGit() {
     const item = this.state.item
     Actions.profile({ item })
@@ -46,17 +43,18 @@ export default class UserDetails extends Component {
         <View style={styles.details}>
 
           <View style={styles.Infor}>
-            <Text style={styles.inforTitle}>Username</Text>
-            <Text style={styles.inforDescription}>{this.state.item.usernameGithub}</Text>
-            <Text style={styles.inforTitle}>Bio</Text>
-            <Text style={styles.inforDescription}>{this.state.item.bioGitHub}</Text>
-            <Text style={styles.inforTitle}>Endereço </Text>
-            <Text style={styles.inforDescription}>{this.state.item.locationDescription}</Text>
-
+            <ScrollView>
+              <Text style={styles.inforTitle}>Username</Text>
+              <Text style={styles.inforDescription}>{this.state.item.usernameGithub}</Text>
+              <Text style={styles.inforTitle}>Bio</Text>
+              <Text style={styles.inforDescription}>{this.state.item.bioGitHub}</Text>
+              <Text style={styles.inforTitle}>Endereço </Text>
+              <Text style={styles.inforDescription}>{this.state.item.locationDescription}</Text>
+            </ScrollView>
           </View>
 
           <TouchableOpacity style={styles.detailsIcon}
-          onPress={() => this.profileGit(this.state.item.usernameGithub)}
+            onPress={() => this.profileGit(this.state.item.usernameGithub)}
 
           >
             <Ionicons name="logo-github" style={styles.icon} />
@@ -74,10 +72,6 @@ export default class UserDetails extends Component {
               longitudeDelta: 0.01,
             }}
             showsUserLocation
-          /*
-          latitude: this.state.item.location.coordinates.latitude,
-          longitude: this.state.item.location.coordinates.longitude
-     */
           >
             <Marker.Animated
               coordinate={{
@@ -88,6 +82,10 @@ export default class UserDetails extends Component {
               }}
             />
           </MapView>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
+            <Text style={{ fontSize: 15, color: '#fff' }}>latitude : {this.state.item.Location.latitude}  </Text>
+            <Text style={{ fontSize: 15, color: '#fff' }}>longitude : {this.state.item.Location.longitude}</Text>
+          </View>
         </View>
       </View>
     )
@@ -142,17 +140,17 @@ const styles = StyleSheet.create({
   },
   detailsIcon: {
     justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#4a4b4f',
     width: width * 0.2,
     height: height * 0.25,
     marginRight: 15,
     marginLeft: 15,
-
-
   },
   icon: {
     color: '#fff',
-    fontSize: 100
+    fontSize: 80,
+    marginBottom: 15,
   },
   Infor: {
     flex: 1,
@@ -161,6 +159,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#4a4b4f',
     width: width * 0.8,
     height: height * 0.25,
+    marginTop: 10,
+    marginBottom: 10
 
   },
   inforTitle: {
@@ -188,5 +188,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: width * 0.9,
     height: height * 0.35,
+    marginTop: 5,
+    marginBottom: 10
   }
 })

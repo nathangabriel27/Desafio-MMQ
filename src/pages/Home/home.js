@@ -4,7 +4,8 @@ import { Actions } from 'react-native-router-flux'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import firebase from 'firebase'
 import _ from 'lodash'
-console.disableYellowBox = true;
+console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
+
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
 
 export default class Home extends Component {
@@ -60,6 +61,12 @@ export default class Home extends Component {
   }
   userDetailsGit(item) {
     Actions.userDetailsGit({ item })
+  }
+  openPhone() {
+    Alert.alert("Abrir Telefone", 'Função ainda será implementada passando o telefone e abrindo nativamente o telefone')
+  }
+  openMail() {
+    Alert.alert("Abrir email", 'Função ainda será implementada passando o email a ser enviado')
   }
 
   renderUserGit(item) {
@@ -160,11 +167,11 @@ export default class Home extends Component {
                       <View style={styles.containerIcons}>
 
 
-                        <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }} >
+                        <TouchableOpacity style={styles.icons} onPress={() => { this.openPhone() }} >
                           <Ionicons name="ios-phone-portrait" size={30} color='#5c060a' />
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.icons} onPress={() => { this.teste() }}>
+                        <TouchableOpacity style={styles.icons} onPress={() => { this.openMail() }}>
                           <Ionicons name="ios-pin" size={30} color='#5c060a' />
                         </TouchableOpacity>
 
@@ -205,7 +212,8 @@ const styles = StyleSheet.create({
   },
   subMain: {
     flex: 1,
-    marginLeft: 0
+    marginLeft: 0,
+    backgroundColor:'#fff'
   },
   subText: {
     backgroundColor: '#3124',
@@ -224,9 +232,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    //borderBottomColor: '#ccc',
-    //borderBottomWidth: 15,
-
+/*     marginTop: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 0,
+ */
     //Estilos de elevacao android e ios
     borderRadius: 10,
     elevation: 4,
@@ -235,7 +245,6 @@ const styles = StyleSheet.create({
     shadowColor: '#e9e9e9e9',
     shadowOpacity: 0.1,
     shadowRadius: 4,
-
     marginHorizontal: 12,
     marginVertical: 10
 
@@ -328,7 +337,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   email: {
-    fontSize: 14,
+    fontSize: 12,
   },
   loading: {
     flex: 1,

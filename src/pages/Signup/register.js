@@ -6,17 +6,13 @@ import MapView, { Marker, Callout } from 'react-native-maps'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import _ from 'lodash'
 
-
-
-console.disableYellowBox = true;
+console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
 
 import firebase from "firebase"
 
 var { height, width } = Dimensions.get('window');
 
-
 // import { Container } from './styles';
-
 
 export default class Sinup extends Component {
   constructor(props) {
@@ -36,8 +32,6 @@ export default class Sinup extends Component {
 
     };
   }
-
-
   async componentDidMount() {
     this.searchUsers()
     const { currentUser } = firebase.auth();
@@ -51,15 +45,15 @@ export default class Sinup extends Component {
       .then((snapshot) => {
         const usersMaped = _.values(snapshot.val());
         this.setState({ usersData: usersMaped })
-        console.log("userdata", this.state.usersData)
+        // console.log("userdata", this.state.usersData)
       })
   }
 
   backToHome() {
     Actions.home()
   }
-  toRegister() {
 
+  toRegister() {
     Keyboard.dismiss()
     Alert.alert(
       'Registrar',
@@ -124,19 +118,15 @@ export default class Sinup extends Component {
   render() {
     const { searchFocused } = this.state
     const devs = this.state.usersData
-    console.log('DEVS: ', devs);
-
     return (
-
       <>
-        <StatusBar  barStyle={'dark-content'} hidden={true}/>
+        <StatusBar barStyle={'dark-content'} hidden={true} />
         <KeyboardAvoidingView
           keyboardVerticalOffset={0}
           behavior='padding'
           style={{ flex: 2 }}
           enabled={false}
         >
-
           <MapView
             initialRegion={{
               latitude: -19.9132301,
@@ -149,8 +139,6 @@ export default class Sinup extends Component {
             loadingEnabled
           //onRegionChangeComplete={handleRegionChanged}
           >
-
-
             {devs.map(dev => (
               <Marker
                 coordinate={{
@@ -171,14 +159,13 @@ export default class Sinup extends Component {
                 </Callout>
               </Marker>
             ))}
-
-
           </MapView>
 
           <TextInput
             type='text'
             style={styles.textInput}
             placeholder="Seu usuario do Github ..."
+            autoCapitalize='none'
             placeholderTextColor='rgba(0,0,0,0.75)'
             value={this.state.usernameGithub}
             onChangeText={e => this.setState({ usernameGithub: e })}
@@ -198,7 +185,6 @@ export default class Sinup extends Component {
                 locationDescription: details.vicinity
 
               })
-              console.log("location :", this.state.locationDescription);
             }}
             query={{
               key: 'AIzaSyBVvpE2A3__qwwnX2vPnD_A1epgVsEKWQ0',
@@ -217,7 +203,6 @@ export default class Sinup extends Component {
               container: {
                 position: 'absolute',
                 top: Platform.select({ ios: 130, android: 110 }),
-
                 width: '100%'
               },
               textInputContainer: {
@@ -259,7 +244,7 @@ export default class Sinup extends Component {
                 shadowOpacity: 0.1,
                 shadowOffset: { x: 0, y: 0 },
                 shadowRadius: 15,
-                marginTop: 10,
+                marginTop: 100,
                 borderRadius: 25
               },
               description: {
@@ -282,9 +267,9 @@ export default class Sinup extends Component {
             </View>
           </TouchableOpacity>
         </KeyboardAvoidingView>
+
       </>
     )
-
   }
 }
 
@@ -358,9 +343,7 @@ const styles = StyleSheet.create({
       height: 4,
     },
     elevation: 4
-
   },
-
   loadButton: {
     width: 50,
     marginTop: '10%',
@@ -370,7 +353,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 15
-
   },
   textInput: {
     flex: 1,
@@ -401,7 +383,6 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     paddingLeft: 20,
     paddingRight: 20,
-
   },
   dataSubmit: {
     flex: 1,
@@ -413,17 +394,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     borderRadius: 25,
     borderWidth: 3,
-    top: Platform.select({ ios: 100, android: 180 }),
+    top: Platform.select({ ios: 200, android: 180 }),
     width: '90%',
     backgroundColor: '#000',
     flexDirection: 'row',
-
   },
   dataSubmitTeText: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff'
-
   },
   icon: {
     fontSize: 28,
@@ -435,7 +414,5 @@ const styles = StyleSheet.create({
     width: 260,
     height: 100
   },
-
-
 })
 
