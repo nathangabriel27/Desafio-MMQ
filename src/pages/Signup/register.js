@@ -129,7 +129,7 @@ export default class Sinup extends Component {
     return (
 
       <>
-        <StatusBar  barStyle={'dark-content'}/>
+        <StatusBar  barStyle={'dark-content'} hidden={true}/>
         <KeyboardAvoidingView
           keyboardVerticalOffset={0}
           behavior='padding'
@@ -205,7 +205,7 @@ export default class Sinup extends Component {
               language: 'pt'
             }}
             textInputProps={{
-              onFocus: () => { this.setState({ searchFocused: true }) },
+              onFocus: () => { this.setState({ searchFocused: false }) },
               onblur: () => { this.setState({ searchFocused: false }) },
               autoCapitalize: 'none',
               autoCurrent: false
@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     borderRadius: 25,
     borderWidth: 3,
-    top: Platform.select({ ios: 800, android: 880 }),
+    top: Platform.select({ ios: 100, android: 180 }),
     width: '90%',
     backgroundColor: '#000',
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, FlatList, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, FlatList, TouchableOpacity, ScrollView, Dimensions , StatusBar} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import moment from 'moment'
 
@@ -20,10 +20,7 @@ export default class UserDetails extends Component {
     }
   }
   async componentDidMount() {
-    console.log(this.state.item.location.street.name);
-
     this.codCep(),
-
       navigator.geolocation.getCurrentPosition(
         () => {
           this.setState({
@@ -56,11 +53,7 @@ export default class UserDetails extends Component {
             latitude: item.geometry.location.lat,
             longitude: item.geometry.location.lng,
           })
-          console.log(item.geometry.location.lat);
-          console.log(item.geometry.location.lng);
-
         })
-
       }).catch(err => {
         console.log(err);
       })
@@ -71,7 +64,7 @@ export default class UserDetails extends Component {
     const { region } = this.state
     return (
       <View style={styles.container}>
-
+        <StatusBar barStyle={'dark-content'}  />
         <View style={styles.header}>
 
           <ImageBackground
