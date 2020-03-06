@@ -1,13 +1,13 @@
 
 <h1 align="center">Desafio MMQ </h1>
-Usando Expo e React Native criamos uma aplicação com randomusers + geocodingAPI + placesAPi + firebase
+Usando Expo e React Native criamos uma aplicação com Randomusers + GeocodingAPI + PlacesAPI + Firebase.
 
 
 ## 💻 Desafio MMQ 💻
 
 - Aplicativo para testar os meus conhecimentos para processo seletivo interno;
 
-- O desafio era usar uma api externa e transformar em dados  em uma aplicação mobile.
+- O desafio era usar uma API externa e transformar em dados  em uma aplicação mobile.
 <p align="center">
 
 ## Explicação do APP
@@ -39,16 +39,13 @@ Como background tem uma mapa com os usuarios e os dados requisitados a API do Gi
  -->
 </p>
 
-<p>
-Para criar esta aplicação foram usadas diferentes APIs.
-- 
 
-</p>
+## Para criar esta aplicação foram usadas diferentes APIs.
 
-- Api de usuarios randomicos.
+- API de usuarios randomicos.
 
 <p>
-Api que retorna usuarios randomicos a cada nova requisição, de acordo com a documentação é possivel passar filtros na requisição e retornar um objeto JSON. 
+API que retorna usuarios randomicos a cada nova requisição, de acordo com a documentação é possivel passar filtros na requisição e retornar um objeto JSON. 
 </p>
 Documentação: 
 
@@ -63,10 +60,10 @@ Uso
 https://randomuser.me/api/?results=1&nat=BR
 
 ```
-- Api Geocoding.
+- API Geocoding.
 
 <p>
-Api verifica a geolocalização retornar um Json de informações sobre as coordenadas passadas. 
+API verifica a geolocalização retornar um Json de informações sobre as coordenadas passadas. 
 </p>
 Documentação: 
 
@@ -75,10 +72,10 @@ https://developers.google.com/maps/documentation/geocoding/intro?hl=pt-br
 
 ```
 
-- Api PlacesAPI.
+- API PlacesAPI.
 
 <p>
-Api da google que realiza um Seach dos locais e retorna dados como latitude e longitude, se o local for especifico, se tem o retorno com dados mais detalhados sobre o local. 
+API da google que realiza um Seach dos locais e retorna dados como latitude e longitude, se o local for especifico, se tem o retorno com dados mais detalhados sobre o local. 
 </p>
 Documentação: 
 
@@ -87,10 +84,10 @@ https://developers.google.com/places/web-service/search?hl=pt
 
 ```
 
-- Api GitHub.
+- API GitHub.
 
 <p>
-Api que busca dados dos repositorios do GitHub e retorna JSON. Atravez dessa API se consegue todas as informações publicas do usuario.  
+API que busca dados dos repositorios do GitHub e retorna JSON. Atravez dessa API se consegue todas as informações publicas do usuario.  
 </p>
 Documentação: 
 
@@ -112,7 +109,7 @@ Foi utilizado o banco de dados Firebase para armazenar os  dados, dados que são
 </p>
 
  <p align="center">
-<img src="./assets/firebase.png" alt="firebase"  width=550 flexDirection='row'>
+<img src="./assets/firebase.png" alt="firebase"  width=700 flexDirection='row'>
 
 
 <!-- 
@@ -125,7 +122,7 @@ https://drive.google.com/open?id=1LUneROwyDupnszscATtpTit1zs5FrFhD
 
 ## 🎩 Dependencias do desenvolvimento
 
-Um gerenciador de pacotes como o yarn ou npm para baixar as dependências do projeto .
+Um gerenciador de pacotes como o yarn ou npm para baixar as dependências do projeto.
 
 
 Documentação npm: 
