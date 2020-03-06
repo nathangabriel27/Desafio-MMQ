@@ -12,7 +12,7 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numUsers: 50,
+      numUsers: 500,
       loading: true,
       data: [],
       usersData: [],
