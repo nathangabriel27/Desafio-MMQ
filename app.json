@@ -22,21 +22,24 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
+     "ios": {
+      "bundleIdentifier": "com.mastermaq.desafiommq",
+      "buildNumber": "1.0.0",
       "supportsTablet": true,
-      "bundleIdentifier": "com.codingmechanic.desafioMMQ",
       "config": {
         "googleMapsApiKey": "SUA CHAVE DA API DO IOS AQUI"
       }
     },
     "android": {
-      "package": "com.codingmechanic.DesafioMMQ",
+      "package": "com.mastermaq.desafiommq",
+      "versionCode": 1,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBVvpE2A3__qwwnX2vPnD_A1epgVsEKWQ0"
         }
       }
     },
-    "description": "Repositório: https://github.com/nathangabriel27/Desafio-MMQ "
+    "description": "",
+    "githubUrl": "https://github.com/nathangabriel27/Desafio-MMQ "
   }
 }
